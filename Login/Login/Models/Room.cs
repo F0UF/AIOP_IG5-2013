@@ -15,5 +15,6 @@ namespace Login.Models
         public int capacity { get; set; }
         //Duplication pour alléger les requêtes
         public Boolean available { get; set; }
+        public String building { get; set; }
     }
 }
