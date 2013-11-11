@@ -16,13 +16,5 @@ namespace Login.Controllers
         {
             return View();
         }
-
-        public string GetCalendarId()
-        {
-            GoogleCalendar calendar = new GoogleCalendar
-           ("AIOP Groupe4", "aiop2013g4", "Adminaiop2013");
-            return calendar.GetCalendarId();
-        }
-
     }
 }

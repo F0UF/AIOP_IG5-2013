@@ -5,9 +5,8 @@ using System.Web;
 
 namespace Login.Models
 {
-    public class CalendarEventObject
+    public class Internal : Teacher
     {
-        public DateTime Date { get; set; }
-        public string Title { get; set; }
+        public String speciality { get; set; }
     }
 }
