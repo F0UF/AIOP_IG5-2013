@@ -12,5 +12,7 @@ namespace Login.Models
         //On spécifie l'enseignant ici pour prendre en compte le fait que plusieurs enseignants peuvent collaborer sur une UE
         public Teacher teacher { get; set; }
         public Teaching teaching { get; set; }
+        public DateTime date { get; set; }
+        public TimeSpan duration { get; set; }
     }
 }
