@@ -124,21 +124,23 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\CalendarController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Models\Teaching.cs" />
-    <Compile Include="Models\Teacher.cs" />
+    <Compile Include="Models\Batiment.cs" />
+    <Compile Include="Models\Cours.cs" />
+    <Compile Include="Models\Enseignement.cs" />
+    <Compile Include="Models\Groupe.cs" />
+    <Compile Include="Models\Matiere.cs" />
+    <Compile Include="Models\Salle.cs" />
+    <Compile Include="Models\Enseignant.cs" />
     <Compile Include="Models\Reservation.cs" />
-    <Compile Include="Models\External.cs" />
-    <Compile Include="Models\Person.cs" />
-    <Compile Include="Models\Room.cs" />
     <Compile Include="Models\LoginModel.cs" />
     <Compile Include="Models\LoginContext.cs" />
-    <Compile Include="Models\Student.cs" />
-    <Compile Include="Models\Internal.cs" />
-    <Compile Include="Models\Promotion.cs" />
+    <Compile Include="Models\Type_de_cours.cs" />
+    <Compile Include="Models\Ue.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -229,6 +231,7 @@
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Account\Login.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
+    <Content Include="Views\Calendar\Calendar.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

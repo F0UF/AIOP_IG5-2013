@@ -5,8 +5,9 @@ using System.Web;
 
 namespace Login.Models
 {
-    public class Internal : Teacher
+    public class Type_de_cours
     {
-        public String speciality { get; set; }
+        public int Id { get; set; }
+        public String libelle_type_de_cours { get; set; }
     }
 }
