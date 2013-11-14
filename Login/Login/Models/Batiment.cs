@@ -5,8 +5,9 @@ using System.Web;
 
 namespace Login.Models
 {
-    public class External : Teacher
+    public class Batiment
     {
-        public String company { get; set; }
+        public int Id { get; set; }
+        public String libelle_batiment { get; set; }
     }
 }
