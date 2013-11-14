@@ -24,6 +24,11 @@ namespace AIOPServer.Controllers
             return View();
         }
 
+        public ActionResult Calendar()
+        {
+            return View();
+        }
+
         [HttpPost]
         public ActionResult Login(string username, string mdp)
         {

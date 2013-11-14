@@ -7,7 +7,7 @@ using System.Web;
 
 namespace AIOPServer.Models
 {
-    [Table("TypeCours")]
+    [Table("TYPECOURS")]
     public class CourseType
     {
         [Key]

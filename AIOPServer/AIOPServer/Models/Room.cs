@@ -7,13 +7,16 @@ using System.Web;
 
 namespace AIOPServer.Models
 {
-    [Table("Salle")]
+    [Table("SALLE")]
     public class Room
     {
+    
         [Key]
         [Column("ID_SALLE")]
         public int Id_Room { get; set; }
 
+        public virtual Building Building { get; set; }
+        [ForeignKey("Building")]
         [Column("ID_BATIMENT")]
         public int Id_Building { get; set; }
 

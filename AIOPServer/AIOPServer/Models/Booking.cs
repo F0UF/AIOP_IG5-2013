@@ -8,7 +8,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace AIOPServer.Models
 {
-    [Table("Reservation")]
+    [Table("RESERVATION")]
     public class Booking
     {
 
@@ -16,16 +16,23 @@ namespace AIOPServer.Models
         [Column("ID_RESERVATION")]
         public int Id_Booking { get; set; }
 
+        public virtual Room Room { get; set; }
+        [ForeignKey("Room")]
         [Column("ID_SALLE")]
         public int Id_Room { get; set; }
 
-        [Column("ID_ENSEIGNANT")]
-        public int Id_Teacher { get; set; }
+        public virtual Teaching Teaching { get; set; }
+        [ForeignKey("Teaching")]
+        [Column("ID_ENSEIGNEMENT")]
+        public int Id_Teaching { get; set; }
 
         [Column("HEURE_DEBUT")]
         public DateTime Start_Date { get; set; }
 
         [Column("HEURE_FIN")]
         public DateTime End_Date { get; set; }
+
+       
+     
     }
 }

@@ -1,4 +1,5 @@
 ﻿using System.Data.Entity;
+using System.Data.Entity.ModelConfiguration.Conventions;
 
 namespace AIOPServer.Models
 {
@@ -17,7 +18,20 @@ namespace AIOPServer.Models
         {
         }
 
+        protected override void OnModelCreating(DbModelBuilder modelBuilder)
+        {
+            modelBuilder.Conventions.Remove<OneToManyCascadeDeleteConvention>();
+        }
+
         public DbSet<Teacher> Teachers { get; set; }
         public DbSet<Room> Rooms { get; set; }
+        public DbSet<Booking> Bookings { get; set; }
+        public DbSet<Building> Buildings { get; set; }
+        public DbSet<Course> Courses { get; set; }
+        public DbSet<CourseType> CourseTypes { get; set; }
+        public DbSet<Group> Groups { get; set; }
+        public DbSet<Subject> Subjects { get; set; }
+        public DbSet<Teaching> Teachings { get; set; }
+        public DbSet<Module> Modules { get; set; }
     }
 }
