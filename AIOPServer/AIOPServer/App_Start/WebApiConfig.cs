@@ -14,6 +14,17 @@ namespace AIOPServer
                 name: "AccountAPI",
                 routeTemplate: "api/{controller}/{action}"
             );
+
+
+            var jsonIDRemove = config.Formatters.JsonFormatter;
+            jsonIDRemove.SerializerSettings.PreserveReferencesHandling =
+                Newtonsoft.Json.PreserveReferencesHandling.None;
+            //var json = config.Formatters.JsonFormatter;
+            //json.SerializerSettings.PreserveReferencesHandling =
+            //    Newtonsoft.Json.PreserveReferencesHandling.Objects;
+
+            config.Formatters.Remove(config.Formatters.XmlFormatter);
+
         }
     }
 }
