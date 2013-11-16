@@ -1,12 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Data;
+using System.Data.Entity;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
 using AIOPServer.Models;
 using Newtonsoft.Json.Linq;
 using System.Web.Script.Serialization;
+using System.Data.Entity.Infrastructure;
+using System.Web;
+
 
 namespace AIOPServer.API
 {
@@ -25,6 +30,19 @@ namespace AIOPServer.API
             return bookings;
         }
 
+
+        [HttpGet]
+        [ActionName("BookingStatus")]
+        public IEnumerable<Booking> GetStatus(int id_Teacher)
+        {
+            IEnumerable<Booking> bookings = null;
+
+            bookings = db.Bookings.Where(b => b.Teaching.Id_Teacher == id_Teacher);
+
+            return bookings;
+        }
+
+
         [HttpGet]
         [ActionName("Display")]
         public IEnumerable<Booking> GetPlanning(string Group_Name)
@@ -38,6 +56,27 @@ namespace AIOPServer.API
             bookings = db.Bookings.Where(b => b.Teaching.Group.Group_Name.StartsWith(Group_Name) & b.State == "Validé");
 
             return bookings;
+        }
+
+        [HttpGet]
+        [ActionName("Delete")]
+        public String DeleteBooking(int id_Booking)
+        {
+            try
+            {
+                using (var context = new AIOPContext())
+                {
+                    var bk = new Booking { Id_Booking = id_Booking };
+                    context.Bookings.Attach(bk);
+                    context.Bookings.Remove(bk);
+                    context.SaveChanges();
+                    return "ok";
+                }
+            }
+            catch (Exception e)
+            {
+                return "Suppression impossible";
+            }
         }
     }
 }
