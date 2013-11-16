@@ -45,8 +45,9 @@ namespace AIOPServer.API
 
         [HttpGet]
         [ActionName("summaryHours")]
-        public String GetsummaryHours(int id_teacher, DateTime currentDate)
+        public JObject GetsummaryHours(int id_teacher)
         {
+            DateTime currentDate = new DateTime(2012, 3, 12);
             int totalHoursToDo = 0;
             int hoursDone = 0;
             int hoursPlan = 0;
@@ -64,7 +65,7 @@ namespace AIOPServer.API
 
             IQueryable<Booking> bookingHoursDoneQuery =
             from booking in db.Bookings
-            where booking.End_Date < currentDate && booking.Teaching.Id_Teacher == id_teacher
+            where booking.End_Date < currentDate && booking.Teaching.Id_Teacher == id_teacher && booking.State == "Validé"
             select booking;
 
             foreach (Booking booking in bookingHoursDoneQuery)
@@ -76,19 +77,28 @@ namespace AIOPServer.API
 
             IQueryable<Booking> bookingHoursPlanQuery =
             from booking in db.Bookings
-            where booking.Start_Date > currentDate && booking.Teaching.Id_Teacher == id_teacher
+            where booking.Start_Date > currentDate && booking.Teaching.Id_Teacher == id_teacher && booking.State == "Validé"
             select booking;
 
             foreach (Booking booking in bookingHoursPlanQuery)
             {
                 hoursPlan += (int)(booking.End_Date - booking.Start_Date).TotalHours;
-                //hoursPlac += (int)(booking.End_Date - booking.Start_Date).TotalSecond;
+                //hoursPlan += (int)(booking.End_Date - booking.Start_Date).TotalSecond;
             }
             //hoursPlan = hoursDone/3600;
 
             hoursLeftToPlan = totalHoursToDo - hoursPlan - hoursDone;
 
-            return "Summary : " + totalHoursToDo + " " + hoursPlan + " " + hoursDone + " " + hoursLeftToPlan;
+           // return "Summary : " + totalHoursToDo + " " + hoursPlan + " " + hoursDone + " " + hoursLeftToPlan;
+
+            JObject jo = new JObject();
+
+            jo.Add("Total Hours To Do", totalHoursToDo);
+            jo.Add("Hours Plan", hoursPlan);
+            jo.Add("Hours Done", hoursDone);
+            jo.Add("Hours Left To Plan", hoursLeftToPlan);
+
+            return jo;
         }
 
         [HttpPost]
