@@ -148,7 +148,6 @@ namespace AIOPServer.API
             jo.Add("Hours Left To Plan", hoursLeftToPlan);
 
             return jo;
-           
         }
     }
 }
