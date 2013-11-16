@@ -6,10 +6,10 @@ using System.Web.Mvc;
 
 namespace AIOPClient.Controllers
 {
-    public class WorkingHoursController : Controller
+    public class BookingStatusController : Controller
     {
         //
-        // GET: /WorkingHours/
+        // GET: /BookingStatus/
 
         public ActionResult Index()
         {

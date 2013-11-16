@@ -6,10 +6,10 @@ using System.Web.Mvc;
 
 namespace AIOPClient.Controllers
 {
-    public class WorkingHoursController : Controller
+    public class GlobalCalendarController : Controller
     {
         //
-        // GET: /WorkingHours/
+        // GET: /GlobalCalendar/
 
         public ActionResult Index()
         {

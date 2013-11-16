@@ -6,14 +6,45 @@
     <title>@ViewBag.Title</title>
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
-    <link href="http://netdna.bootstrapcdn.com/twitter-bootstrap/2.2.2/css/bootstrap-combined.min.css" rel="stylesheet">
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap.min.css">
+    <!-- Optional theme -->
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap-theme.min.css">
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="//netdna.bootstrapcdn.com/bootstrap/3.0.2/js/bootstrap.min.js"></script>
+    @*<link href="http://netdna.bootstrapcdn.com/twitter-bootstrap/2.2.2/css/bootstrap-combined.min.css" rel="stylesheet">*@
     <link rel="stylesheet" type="text/css" media="screen"
      href="http://tarruda.github.com/bootstrap-datetimepicker/assets/css/bootstrap-datetimepicker.min.css">
 </head>
+
 <body>
+    <nav class="navbar navbar-default" role="navigation">
+    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+        <ul class="nav navbar-nav">
+            <li><a href="../MyCalendar/Index"><span class="glyphicon glyphicon-home"></span> My Calendar</a></li>
+            <li><a href="../GlobalCalendar/Index"><span class="glyphicon glyphicon-calendar"></span> Global Calendar</a></li>
+            <li><a href="../WorkingHours/Index"><span class="glyphicon glyphicon-time"></span> Working Hours</a></li>
+            <li><a href="../BookRoom/Index"><span class="glyphicon glyphicon-bookmark"></span> Book Room</a></li>
+            <li><a href="../BookingStatus/Index"><span class="glyphicon glyphicon-dashboard"></span> Booking Status</a></li>
+            <li><a href="../ManageBooking/Index"><span class="glyphicon glyphicon-bookmark"></span> Manage Booking</a></li>
+        </ul>
+
+        <ul class="nav navbar-nav navbar-right">
+            <li><a>Fred Pizza</a></li>
+            <li><a href="#"><span class="glyphicon glyphicon-off"></span></a></li>
+        </ul>
+    </div><!-- /.navbar-collapse -->
+</nav>
+    <div class="jumbotron">
+        <div class="container">
     @RenderBody()
 
     @Scripts.Render("~/bundles/jquery")
     @RenderSection("scripts", required: false)
+           </div>
+        </div>
+    <footer>
+        <p class="text-center">&copy; AIOP 2013</p>
+    </footer>
 </body>
 </html>

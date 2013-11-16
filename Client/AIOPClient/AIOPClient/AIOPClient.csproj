@@ -126,7 +126,11 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Controllers\BookingStatusController.cs" />
     <Compile Include="Controllers\BookRoomController.cs" />
+    <Compile Include="Controllers\GlobalCalendarController.cs" />
+    <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\ManageBookingController.cs" />
     <Compile Include="Controllers\MyCalendarController.cs" />
     <Compile Include="Controllers\WorkingHoursController.cs" />
     <Compile Include="Global.asax.cs">
@@ -218,9 +222,13 @@
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
-    <Content Include="Views\MyCalendar\MyCalendar.cshtml" />
-    <Content Include="Views\WorkingHours\WorkingHours.cshtml" />
-    <Content Include="Views\BookRoom\BookRoom.cshtml" />
+    <Content Include="Views\MyCalendar\Index.cshtml" />
+    <Content Include="Views\WorkingHours\Index.cshtml" />
+    <Content Include="Views\BookRoom\Index.cshtml" />
+    <Content Include="Views\BookingStatus\Index.cshtml" />
+    <Content Include="Views\GlobalCalendar\Index.cshtml" />
+    <Content Include="Views\ManageBooking\Index.cshtml" />
+    <Content Include="Views\Home\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
