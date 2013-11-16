@@ -11,7 +11,7 @@ namespace AIOPClient.Controllers
         //
         // GET: /BookClass/
 
-        public ActionResult BookRoom()
+        public ActionResult Index()
         {
             return View();
         }
