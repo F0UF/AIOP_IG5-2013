@@ -31,5 +31,10 @@ namespace AIOPServer.Models
         [Column("SUPER_USER")]
         [DataMember]
         public int Super_User { get; set; }
+
+        public static Teacher getTeacher(AIOPContext db, string username)
+        {
+            return db.Teachers.SingleOrDefault(user => user.Last_Name == username);
+        }
     }
 }
