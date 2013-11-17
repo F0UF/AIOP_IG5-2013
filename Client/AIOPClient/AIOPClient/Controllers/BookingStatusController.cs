@@ -8,6 +8,7 @@ using System.Web.Script.Serialization;
 using AIOPClient.Models;
 using System.IO;
 using Newtonsoft.Json.Linq;
+using System.Diagnostics;
 
 namespace AIOPClient.Controllers
 {
@@ -24,34 +25,33 @@ namespace AIOPClient.Controllers
 
         public bool getReservationList()
         {
-            statusListModel model = new statusListModel();
             using (var client = new WebClient())
             {
-                var json = client.DownloadString("http://aiopninjaserver.no-ip.biz/api/planning/display?id_teacher=11");
+                var result = client.DownloadString("http://aiopninjaserver.no-ip.biz/api/planning/display?id_teacher=11");
+                JArray jsonVal = JArray.Parse(result) as JArray;
+                dynamic reservations = jsonVal;
 
-                if (json.Equals(""))
+                foreach (dynamic reservation in reservations)
                 {
-                    return false;
+                    ViewBag.test=reservation.Start_Date;
+                    /**foreach (dynamic song in reservation.Room)
+                    {
+                        Console.WriteLine("\t" + song.SongName);
+                    }**/
                 }
-                else
-                {
-                    JObject o = JObject.Parse(json);
-                    model.dateBegin = (string)o["Start_Date"];
-                    model.dateEnd = (string)o["End_Date"];
-                    model.teaching = (string)o["Module_Name"];
-                    model.promotion = (string)o["Group_Name"];
-                    model.computers = (string)o["Computer"];
-                    model.projector = (string)o["Projector"];
-                    model.status = (string)o["State"];
-                    Console.WriteLine(model.dateBegin);
-                    Console.WriteLine(model.dateEnd);
-                    Console.WriteLine(model.teaching);
-                    Console.WriteLine(model.promotion);
-                    Console.WriteLine(model.computers);
-                    Console.WriteLine(model.projector);
-                    Console.WriteLine(model.status);
-                    return true;
-                }
+
+                //Debug.WriteLine(reservations[0].Start_Date);
+                /**Debug.WriteLine(reservations[0].Songs[1].SongName);
+
+                string dateBegin = j.Start_Date;
+                string dateEnd = j.End_Date;
+                string teaching = j.Module_Name;
+                string promotion = j.Groupe_Name;
+                string computers = j.Computer;
+                string projector = j.Projector;
+                string status = j.State;**/
+
+                return true;
             }
         }
     }
