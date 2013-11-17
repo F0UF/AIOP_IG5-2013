@@ -27,6 +27,7 @@
     <nav class="navbar navbar-default" role="navigation">
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
         <ul class="nav navbar-nav">
+            <!--To allow active links display we make a comparaison between the supposed controller's name and the real one-->
             <li class="@(HttpContext.Current.Request.RequestContext.RouteData.Values["controller"].ToString() == "MyCalendar" ? "active" : "")"><a href="../MyCalendar/Index"><span class="glyphicon glyphicon-home"></span> My Calendar</a></li>
             <li class="@(HttpContext.Current.Request.RequestContext.RouteData.Values["controller"].ToString() == "GlobalCalendar" ? "active" : "")"><a href="../GlobalCalendar/Index"><span class="glyphicon glyphicon-calendar"></span> Global Calendar</a></li>
             <li class="@(HttpContext.Current.Request.RequestContext.RouteData.Values["controller"].ToString() == "WorkingHours" ? "active" : "")"><a href="../WorkingHours/Index"><span class="glyphicon glyphicon-time"></span> Working Hours</a></li>

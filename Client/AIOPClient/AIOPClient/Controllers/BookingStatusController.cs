@@ -16,5 +16,7 @@ namespace AIOPClient.Controllers
             return View();
         }
 
+        public getReservationList
+
     }
 }
