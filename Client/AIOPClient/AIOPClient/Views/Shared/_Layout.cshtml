@@ -1,4 +1,6 @@
-﻿<!DOCTYPE html>
+﻿@model AIOPClient.Models.UserModel
+
+<!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8" />
@@ -16,10 +18,11 @@
 
 <body>
     @*If user is logged then we display the navigation menu, if not we'll display the login form*@
-    @{
-        bool isUserConnected = true;
+    @{  AIOPClient.Models.UserSession session = null;
+        session = AIOPClient.Models.UserSession.GetInstance();    
     }
-    @if (isUserConnected)
+
+    @if (session.logged)
     {
     <nav class="navbar navbar-default" role="navigation">
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
@@ -41,7 +44,7 @@
         </ul>
 
         <ul class="nav navbar-nav navbar-right">
-            <li><a>Fred Pizza</a></li>
+            <li><a href="../MyCalendar/Index">@session.userName</a></li>
             <li><a href="#"><span class="glyphicon glyphicon-off"></span></a></li>
         </ul>
     </div><!-- /.navbar-collapse -->
@@ -50,21 +53,31 @@
     else
     {
     <div class="navbar navbar-default navbar-static-top" role="navigation">
+    <div class="container">
         <div class="navbar-header">
             <a class="navbar-brand" href="#">Dar Calendar</a>
         </div>
         <div class="navbar-collapse collapse">
-            <form class="navbar-form navbar-right">
+            <form class="navbar-form navbar-right" action="/Home/Index" method="post">
+                @Html.AntiForgeryToken()
+                @Html.ValidationSummary(true)
                 <div class="form-group">
-                    <input type="text" placeholder="Login" class="form-control">
+                    @*<input type="text" placeholder="Login" class="form-control">*@
+                    @Html.LabelFor(m => m.Username)
+                    @Html.TextBoxFor(m => m.Username)
+                    @Html.ValidationMessageFor(m => m.Username)
                 </div>
                 <div class="form-group">
-                    <input type="password" placeholder="Password" class="form-control">
+                    @*<input type="password" placeholder="Password" class="form-control">*@
+                    @Html.LabelFor(m => m.Password)
+                    @Html.PasswordFor(m => m.Password)
+                    @Html.ValidationMessageFor(m => m.Password)
                 </div>
                 <button type="submit" class="btn btn-success">Sign in</button>
             </form>
         </div><!--/.navbar-collapse -->
     </div>
+</div>
     }
     <div class="jumbotron">
         <div class="container">
