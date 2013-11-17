@@ -18,7 +18,7 @@ namespace AIOPServer.API
         [ActionName("Display")]
         public IEnumerable<Booking> GetPlanning(int id_Teacher)
         {
-            IEnumerable <Booking> bookings = null;
+            IEnumerable<Booking> bookings = null;
 
             bookings = db.Bookings.Where(b => b.Teaching.Id_Teacher == id_Teacher & b.State == "Validé");
 
@@ -38,6 +38,61 @@ namespace AIOPServer.API
             bookings = db.Bookings.Where(b => b.Teaching.Group.Group_Name.StartsWith(Group_Name) & b.State == "Validé");
 
             return bookings;
+        }
+
+        [HttpPost]
+        [ActionName("CreateBooking")]
+        public void PostBooking(JObject json)
+        {
+            dynamic jo = json;
+            string Group_Name = jo.Group_Name;
+            string Subject_Name = jo.Subject_Name;
+            string Type = jo.Type;
+            bool Projector = jo.Projector;
+            bool Computer = jo.Computer;
+            DateTime Date = jo.Date;
+            DateTime Start_At = jo.Start_At;
+            DateTime End_At = jo.End_At;
+
+            JObject result = new JObject();
+
+            IEnumerable<Teaching> teachings = null;
+
+            teachings = db.Teachings.Where(t => t.Course.Course_Type.Course_Type_Name == Type && t.Course.Subject.Subject_Name == Subject_Name);
+            if (teachings == null)
+            {
+                result.Add("Status", 0);
+            }
+
+        }
+
+        [HttpGet]
+        [ActionName("CreateBooking")]
+        public Booking GetBooking()
+        {
+            int Id_Teacher = 13;
+            string Group_Name = "IG4 anglais G3";
+            string Subject_Name = "Communication";
+            string Type = "TP";
+            //bool Projector = true;
+            //bool Computer = true;
+            //DateTime Date = jo.Date;
+            //DateTime Start_At = jo.Start_At;
+            //DateTime End_At = jo.End_At;
+
+            JObject result = new JObject();
+
+            IEnumerable<Teaching> teachings = null;
+
+            teachings = db.Teachings.Where(t => t.Course.Course_Type.Course_Type_Name == Type && t.Course.Subject.Subject_Name == Subject_Name && t.Group.Group_Name == Group_Name && t.Id_Teacher == Id_Teacher);
+
+            if (teachings == null)
+            {
+                result.Add("Status", 0);
+            }
+
+            return teachings;
+
         }
     }
 }

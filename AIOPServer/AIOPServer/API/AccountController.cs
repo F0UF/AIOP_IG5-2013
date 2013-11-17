@@ -6,6 +6,8 @@ using System.Net.Http;
 using System.Web.Http;
 using AIOPServer.Models;
 using Newtonsoft.Json.Linq;
+using System.Web.Script.Serialization;
+using Newtonsoft.Json;
 
 namespace AIOPServer.API
 {
@@ -16,10 +18,17 @@ namespace AIOPServer.API
 
         [HttpGet]
         [ActionName("login")]
-        public String GetLogin(string username, string mdp) 
+        public JObject GetLogin(string username) 
         {
-            Room room = db.Rooms.Find(1);
-            return "MDP : " + room.Room_Number;
+            Teacher ens = db.Teachers.SingleOrDefault(user => user.Last_Name == username);
+            JObject j = new JObject();
+            dynamic jo = j;
+            jo.Add("Message", "Username saught : " + username);
+            jo.Add(ens);
+            dynamic teacher = JsonConvert.SerializeObject(ens) ;
+            jo.Teacher = teacher;
+
+            return jo;
         }
 
         [HttpPost]
@@ -27,8 +36,8 @@ namespace AIOPServer.API
         public JObject PostLogin(JObject jsonData)
         {
             dynamic json = jsonData;
-            string username = json.username;
-            string password = json.password;
+            string username = json.Username;
+            string password = json.Password;
 
             Teacher ens = db.Teachers.SingleOrDefault(user => user.Last_Name == username);
 
@@ -55,6 +64,7 @@ namespace AIOPServer.API
                 jo.Add("Message", "Wrong username.");
             }
             return jo;
+
         }
 
         [HttpGet]
