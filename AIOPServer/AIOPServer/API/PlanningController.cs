@@ -99,6 +99,7 @@ namespace AIOPServer.API
             IEnumerable<Teaching> teachings = null;
 
             teachings = db.Teachings.Where(t => t.Course.Course_Type.Course_Type_Name == Type && t.Course.Subject.Subject_Name == Subject_Name);
+
             if (teachings == null)
             {
                 result.Add("Status", 0);
@@ -106,9 +107,9 @@ namespace AIOPServer.API
 
         }
 
-        /*[HttpGet]
+        [HttpGet]
         [ActionName("CreateBooking")]
-        public Booking GetBooking()
+        public IEnumerable<Teaching> GetBooking()
         {
             int Id_Teacher = 13;
             string Group_Name = "IG4 anglais G3";
@@ -133,6 +134,6 @@ namespace AIOPServer.API
 
             return teachings;
 
-        }*/
+        }
     }
 }
