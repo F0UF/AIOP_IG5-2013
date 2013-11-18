@@ -58,6 +58,7 @@ namespace AIOPClient.Controllers
                 session = UserSession.GetInstance();
 
                 session.userName = jo.name;
+                session.id_user = jo.id_user;
 
                 if (jo.Status == 0)
                 {

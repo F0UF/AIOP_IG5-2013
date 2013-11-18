@@ -25,32 +25,18 @@ namespace AIOPClient.Controllers
 
         public bool getReservationList()
         {
+            //Construction de l'url de l'API à appeller 
+            AIOPClient.Models.UserSession session = null;
+            session = AIOPClient.Models.UserSession.GetInstance();
+            String urlApi = "http://aiopninjaserver.no-ip.biz/api/planning/display?id_teacher=";
+            String idUser=session.id_user.ToString();
+            urlApi += idUser;
             using (var client = new WebClient())
             {
-                var result = client.DownloadString("http://aiopninjaserver.no-ip.biz/api/planning/display?id_teacher=11");
+                var result = client.DownloadString(urlApi);
                 JArray jsonVal = JArray.Parse(result) as JArray;
                 dynamic reservations = jsonVal;
-
-                foreach (dynamic reservation in reservations)
-                {
-                    ViewBag.test=reservation.Start_Date;
-                    /**foreach (dynamic song in reservation.Room)
-                    {
-                        Console.WriteLine("\t" + song.SongName);
-                    }**/
-                }
-
-                //Debug.WriteLine(reservations[0].Start_Date);
-                /**Debug.WriteLine(reservations[0].Songs[1].SongName);
-
-                string dateBegin = j.Start_Date;
-                string dateEnd = j.End_Date;
-                string teaching = j.Module_Name;
-                string promotion = j.Groupe_Name;
-                string computers = j.Computer;
-                string projector = j.Projector;
-                string status = j.State;**/
-
+                ViewBag.reservationsList = reservations;
                 return true;
             }
         }
