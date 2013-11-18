@@ -99,6 +99,7 @@ namespace AIOPServer.API
             IEnumerable<Teaching> teachings = null;
 
             teachings = db.Teachings.Where(t => t.Course.Course_Type.Course_Type_Name == Type && t.Course.Subject.Subject_Name == Subject_Name);
+
             if (teachings == null)
             {
                 result.Add("Status", 0);

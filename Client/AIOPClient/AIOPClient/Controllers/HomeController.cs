@@ -13,6 +13,7 @@ using System.Web.Mvc;
 using System.Web.Script.Serialization;
 using Newtonsoft.Json.Linq;
 
+
 namespace AIOPClient.Controllers
 {
     public class HomeController : Controller
@@ -53,14 +54,21 @@ namespace AIOPClient.Controllers
                 JObject jresult = JObject.Parse(result);
                 dynamic jo = jresult;
 
+                UserSession session = null;
+                session = UserSession.GetInstance();
+
+                session.userName = jo.name;
+                session.id_user = jo.id_user;
+
                 if (jo.Status == 0)
                 {
                     return false;
                 }
                 else
+                {
+                    session.logged = true;
                     return true;
-
-
+                }
             }
         }
 

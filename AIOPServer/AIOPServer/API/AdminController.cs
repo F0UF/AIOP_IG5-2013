@@ -11,6 +11,7 @@ using Newtonsoft.Json.Linq;
 using System.Web.Script.Serialization;
 using System.Data.Entity.Infrastructure;
 using System.Web;
+using Newtonsoft.Json;
 
 
 namespace AIOPServer.API
@@ -23,79 +24,55 @@ namespace AIOPServer.API
         [ActionName("Waiting")]
         public IEnumerable<Booking> GetWaitingBookings()
         {
-            IEnumerable<Booking> bookings = null;
-            bookings = db.Bookings.Where(b => b.State == "En attente");
-            return bookings;
+            return Booking.getWaitingBooking(db);
         }
 
         [HttpGet]
         [ActionName("Create")]
-        public String CreateTeaching(int id_Teacher, int id_Group, int hour_Number, int id_Course)
+        public Teaching CreateTeaching(int id_Teacher, int id_Group, int hour_Number, int id_Course)
         {
-            try
-            {
-               using (var context = new AIOPContext())
-                {
-                   Teaching teaching = new Teaching
-                   {
-                       Id_Course = id_Course,
-                       Id_Group = id_Group,
-                       Id_Teacher = id_Teacher,
-                       Hour_Number = hour_Number
-                   };
+            return Teaching.createTeaching(db,id_Teacher, id_Group, hour_Number, id_Course);
+        }
 
-                   context.Teachings.Add(teaching);
-                   context.SaveChanges();
-
-                    return "ok";
-                }
-            }
-            catch (Exception e)
-            {
-                return e+ "Création impossible";
-            }
+        [HttpPost]
+        [ActionName("Create")]
+        public JObject PostCreateTeaching(int id_Teacher, int id_Group, int hour_Number, int id_Course)
+        {
+            JObject jo = new JObject();
+            jo.Add(JsonConvert.SerializeObject(Teaching.createTeaching(db, id_Teacher, id_Group, hour_Number, id_Course)));
+            return jo;
         }
 
         [HttpGet]
         [ActionName("Accept")]
-        public String AcceptBookings(int id_Booking)
+        public Booking AcceptBookings(int id_Booking)
         {
-            try
-            {
-                using (var context = new AIOPContext())
-                {
-                    Booking bk = context.Bookings.Find(id_Booking);
-                    bk.State = "Validé";
-                    context.SaveChanges();
-                    return "ok";
-                }
-            }
-            catch (Exception e)
-            {
-                return e + "Validation impossible";
-            }
+            return Booking.acceptBooking(db, id_Booking);
+        }
+
+        [HttpPost]
+        [ActionName("Accept")]
+        public JObject PostAcceptBookings(int id_Booking)
+        {
+            JObject jo = new JObject();
+            jo.Add(JsonConvert.SerializeObject(Booking.acceptBooking(db, id_Booking)));
+            return jo;
         }
 
         [HttpGet]
         [ActionName("Refuse")]
-        public String RefuseBookings(int id_Booking)
+        public Booking RefuseBookings(int id_Booking)
         {
-            try
-            {
-                using (var context = new AIOPContext())
-                {
-                    Booking bk = context.Bookings.Find(id_Booking);
-                    bk.State = "Refusé";
-                    context.SaveChanges();
-                    return "ok";
-                }
-            }
-            catch (Exception e)
-            {
-                return e + "Refus impossible";
-            }
+            return Booking.refuseBooking(db, id_Booking);
         }
 
-
+        [HttpPost]
+        [ActionName("Refuse")]
+        public JObject PostRefuseBookings(int id_Booking)
+        {
+            JObject jo = new JObject();
+            jo.Add(JsonConvert.SerializeObject(Booking.refuseBooking(db, id_Booking)));
+            return jo;
+        }
     }
 }

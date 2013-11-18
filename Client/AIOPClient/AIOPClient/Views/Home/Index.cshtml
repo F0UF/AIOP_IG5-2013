@@ -4,34 +4,6 @@
     ViewBag.Title = "Autentification";
 }
 
-
-<div class="navbar navbar-default navbar-static-top" role="navigation">
-    <div class="container">
-        <div class="navbar-header">
-            <a class="navbar-brand" href="#">Dar Calendar</a>
-        </div>
-        <div class="navbar-collapse collapse">
-            <form class="navbar-form navbar-right" action="/Home/Index" method="post">
-                @Html.AntiForgeryToken()
-                @Html.ValidationSummary(true)
-                <div class="form-group">
-                    @*<input type="text" placeholder="Login" class="form-control">*@
-                    @Html.LabelFor(m => m.Username)
-                    @Html.TextBoxFor(m => m.Username)
-                    @Html.ValidationMessageFor(m => m.Username)
-                </div>
-                <div class="form-group">
-                    @*<input type="password" placeholder="Password" class="form-control">*@
-                    @Html.LabelFor(m => m.Password)
-                    @Html.PasswordFor(m => m.Password)
-                    @Html.ValidationMessageFor(m => m.Password)
-                </div>
-                <button type="submit" class="btn btn-success">Sign in</button>
-            </form>
-        </div><!--/.navbar-collapse -->
-    </div>
-</div>
-
 <h1>Hello !</h1>
 <p>Please Sign in to access the Dar Calendar</p>
 
