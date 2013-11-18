@@ -16,6 +16,7 @@ namespace AIOPServer.API
 
         AIOPContext db = new AIOPContext();
 
+        //Get
         [HttpGet]
         [ActionName("login")]
         public JObject GetLogin(string username) 
@@ -31,6 +32,15 @@ namespace AIOPServer.API
             return jo;
         }
 
+        [HttpGet]
+        [ActionName("logout")]
+        public String GetLogout()
+        {
+            return "Julian Gauthier logout";
+        }
+
+
+        //Post
         [HttpPost]
         [ActionName("login")]
         public JObject PostLogin(JObject jsonData)
@@ -66,13 +76,5 @@ namespace AIOPServer.API
             return jo;
 
         }
-
-        [HttpGet]
-        [ActionName("logout")]
-        public String GetLogout()
-        {
-            return "Julian Gauthier logout";
-        }
-
     }
 }

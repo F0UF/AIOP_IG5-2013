@@ -91,5 +91,11 @@ namespace AIOPServer.Models
 
             return hoursPlan;
         }
+
+        public static IEnumerable<Teacher> GetTeachers(AIOPContext db)
+        {
+            return db.Teachers.AsEnumerable();
+        }
+
     }
 }
