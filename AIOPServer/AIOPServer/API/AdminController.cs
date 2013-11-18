@@ -20,6 +20,7 @@ namespace AIOPServer.API
     {
         AIOPContext db = new AIOPContext();
         
+        //Get
         [HttpGet]
         [ActionName("Waiting")]
         public IEnumerable<Booking> GetWaitingBookings()
@@ -34,6 +35,21 @@ namespace AIOPServer.API
             return Teaching.createTeaching(db,id_Teacher, id_Group, hour_Number, id_Course);
         }
 
+        [HttpGet]
+        [ActionName("Accept")]
+        public Booking AcceptBookings(int id_Booking)
+        {
+            return Booking.acceptBooking(db, id_Booking);
+        }
+
+        [HttpGet]
+        [ActionName("Refuse")]
+        public Booking RefuseBookings(int id_Booking)
+        {
+            return Booking.refuseBooking(db, id_Booking);
+        }
+
+        //Post
         [HttpPost]
         [ActionName("Create")]
         public JObject PostCreateTeaching(int id_Teacher, int id_Group, int hour_Number, int id_Course)
@@ -43,13 +59,6 @@ namespace AIOPServer.API
             return jo;
         }
 
-        [HttpGet]
-        [ActionName("Accept")]
-        public Booking AcceptBookings(int id_Booking)
-        {
-            return Booking.acceptBooking(db, id_Booking);
-        }
-
         [HttpPost]
         [ActionName("Accept")]
         public JObject PostAcceptBookings(int id_Booking)
@@ -57,13 +66,6 @@ namespace AIOPServer.API
             JObject jo = new JObject();
             jo.Add(JsonConvert.SerializeObject(Booking.acceptBooking(db, id_Booking)));
             return jo;
-        }
-
-        [HttpGet]
-        [ActionName("Refuse")]
-        public Booking RefuseBookings(int id_Booking)
-        {
-            return Booking.refuseBooking(db, id_Booking);
         }
 
         [HttpPost]
