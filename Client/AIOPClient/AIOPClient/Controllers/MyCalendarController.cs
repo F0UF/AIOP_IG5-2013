@@ -5,6 +5,7 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
+using AIOPClient.Models;
 
 namespace AIOPClient.Controllers
 {
@@ -15,7 +16,14 @@ namespace AIOPClient.Controllers
 
         public ActionResult Index()
         {
-            return View();
+            UserSession session = null;
+            session = UserSession.GetInstance();
+            if (!session.logged)
+            {
+                return Redirect("../Home/Index");
+            }
+            else
+                return View();
         }
 
         [ActionName("GetEvents")]
