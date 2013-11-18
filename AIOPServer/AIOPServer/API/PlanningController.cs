@@ -106,7 +106,7 @@ namespace AIOPServer.API
 
         }
 
-        [HttpGet]
+        /*[HttpGet]
         [ActionName("CreateBooking")]
         public Booking GetBooking()
         {
@@ -133,6 +133,6 @@ namespace AIOPServer.API
 
             return teachings;
 
-        }
+        }*/
     }
 }
