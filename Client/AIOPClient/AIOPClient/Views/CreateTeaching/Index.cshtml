@@ -1,0 +1,70 @@
+﻿@{
+    ViewBag.Title = "Index";
+}
+<form role="form" class="form-horizontal">
+
+    <div class="panel-heading"><center>Administration</center></div>
+
+    <div class="row">
+        @* We'll have to do a concatenation of Promo/Year/Groupe if needed*@
+        <div class="col-md-2">
+            <label for="promotion">Teaching Name</label>
+        </div>
+        <div class="col-md-2">
+            <input class="input-xxlarge" type="text" id="inputTeachingName" placeholder="Type here…">
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-2">
+            <label for="teaching">Total expected hours :</label>
+        </div>
+        <div class="col-md-2">
+            <input class="input-xxlarge" type="text" id="inputTotalHours" placeholder="Type here…">
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-2">
+            <label for="teaching">Teacher :</label>
+        </div>
+        <div class="col-md-2">
+            <select class="input-xxlarge" class="form-control" title="">
+                <option>BOURDON Isabelle</option>
+                <option>BUISSON Lysiane</option>
+                <option>CART Michelle</option>
+                <option>DE LAUZUN Anne Laure</option>
+                <option>FALLERY Bernard</option>
+                <option>JONQUET Clément</option>
+                <option>LAURENT Anne</option>
+                <option>RUIZ Jacques</option>
+                <option>STRATULAT Tiberiu</option>
+                <option>SALA Michel</option>
+            </select>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-2">
+            <label for="teaching">Course :</label>
+        </div>
+        <div class="col-md-2">
+            <input class="input-xxlarge" type="text" id="inputCourse" placeholder="Type here…">
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-2">
+            <label for="teaching">Group :</label>
+        </div>
+        <div class="col-md-2">
+            <select class="input-xxlarge" class="form-control" title="">
+                <option>IG3</option>
+                <option>IG4</option>
+                <option>IG5</option>
+            </select>
+</div>
+    </div>
+
+    <center><button class="input-xlarge" type="submit" class="btn btn-default">Submit</button></center>
+</form>

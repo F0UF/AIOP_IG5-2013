@@ -128,6 +128,7 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\BookingStatusController.cs" />
     <Compile Include="Controllers\BookRoomController.cs" />
+    <Compile Include="Controllers\CreateTeachingController.cs" />
     <Compile Include="Controllers\GlobalCalendarController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageBookingController.cs" />
@@ -233,6 +234,7 @@
     <Content Include="Views\GlobalCalendar\Index.cshtml" />
     <Content Include="Views\ManageBooking\Index.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
+    <Content Include="Views\CreateTeaching\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
