@@ -76,7 +76,7 @@ namespace AIOPServer.API
             }
             catch (Exception e)
             {
-                return "Suppression impossible";
+                return e + "Suppression impossible";
             }
         }
 
@@ -103,36 +103,66 @@ namespace AIOPServer.API
             {
                 result.Add("Status", 0);
             }
-
         }
 
         [HttpGet]
         [ActionName("CreateBooking")]
-        public Booking GetBooking()
+        public String GetBooking(int Id_Teacher, string Group_Name, string Subject_Name, string Type, bool Projector, bool Computer, int Capacity)
         {
-            int Id_Teacher = 13;
-            string Group_Name = "IG4 anglais G3";
-            string Subject_Name = "Communication";
-            string Type = "TP";
-            //bool Projector = true;
-            //bool Computer = true;
-            //DateTime Date = jo.Date;
-            //DateTime Start_At = jo.Start_At;
-            //DateTime End_At = jo.End_At;
-
-            JObject result = new JObject();
-
-            IEnumerable<Teaching> teachings = null;
-
-            teachings = db.Teachings.Where(t => t.Course.Course_Type.Course_Type_Name == Type && t.Course.Subject.Subject_Name == Subject_Name && t.Group.Group_Name == Group_Name && t.Id_Teacher == Id_Teacher);
-
-            if (teachings == null)
+            try
             {
-                result.Add("Status", 0);
+                using (var context = new AIOPContext())
+                {
+                    DateTime End_Time = DateTime.Today;
+                    DateTime Start_Time = DateTime.Today;
+                    Teaching teaching = db.Teachings.SingleOrDefault(t => t.Course.Course_Type.Course_Type_Name == Type && t.Course.Subject.Subject_Name == Subject_Name && t.Group.Group_Name == Group_Name && t.Id_Teacher == Id_Teacher);
+
+                    if (teaching == null)
+                    {
+                        return "teaching null";
+                    }
+
+                    IEnumerable<Room> bookedRooms =
+                    from booking in db.Bookings
+                    where booking.End_Date <= End_Time && booking.Start_Date >= Start_Time
+                    select booking.Room;
+
+                    IEnumerable<Room> AllRooms = null;
+                    AllRooms = db.Rooms;
+
+                    IEnumerable<Room> FreeRooms = null;
+                    FreeRooms = AllRooms.Except(bookedRooms);
+
+                    IEnumerable<Room> GoodRooms = null;
+                    GoodRooms = FreeRooms.Where(r => r.Projector == Projector && r.Computer == Computer && r.Capacity >= Capacity);
+
+                    IEnumerable<Room> PerfectRooms = GoodRooms.OrderBy(r => r.Capacity);
+
+                    if (PerfectRooms != null)
+                    {
+                        Booking bk = new Booking
+                            {
+                                Id_Teaching = teaching.Id_Teaching,
+                                Id_Room = PerfectRooms.First().Id_Room,
+                                State = "En attente",
+                                Start_Date = Start_Time,
+                                End_Date = End_Time,
+                            };
+
+                        if (bk == null)
+                            return "nulll";
+
+                        context.Bookings.Add(bk);
+                        context.SaveChanges();
+                        return "ok";
+                    }
+                    else return "Perfect rooms null";
+                }
             }
-
-            return teachings;
-
+            catch (Exception e)
+            {
+                return e + "Réservation impossible";
+            }
         }
     }
 }
