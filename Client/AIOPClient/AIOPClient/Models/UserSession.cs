@@ -12,6 +12,7 @@ namespace AIOPClient.Models
 	    private static readonly object mylock = new object();
         public bool logged { get; set; }
         public String userName { get; set; }
+        public int id_user { get; set; }
 
 	    private UserSession()
 	    {
