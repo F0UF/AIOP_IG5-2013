@@ -24,31 +24,44 @@
             },
             defaultView: 'agendaWeek',
             editable: false,
-            events: [
-            {
-                title: 'BD',
-                start: new Date(y, m, 18, 8, 30),
-                end: new Date(y, m, 18, 10, 30),
-                allDay: false,
-                color: '#f47b09'
-            },
-            {
-                title: 'TOEIC',
-                start: new Date(y, m, 21, 14),
-                end: new Date(y, m, 21, 18),
-                allDay: false,
-                color: '#660a9c',
-                url: 'http://www.ets.org/fr/toeic'
-            },
-            {
-                title: 'AIOP',
-                start: new Date(y, m, 19, 8),
-                end: new Date(y, m, 19, 12),
-                allDay: false
+            events: function (start, end, callback) {
+                $.getJSON("@Url.Action("GetEvents")", function (locationsArray) {
+                    var result = $(locationsArray).map(function () {
+                        return {
+                            title: this.title,
+                            start: this.start,
+                            end: this.end,
+                            allDay: this.editable
+                        };
+                    }).toArray();
+                    callback(result);
+                });
             }
-            ]
         });
     });
 
+        //[
+        //        {
+        //            title: 'BD',
+        //            start: new Date(y, m, 18, 8, 30),
+        //            end: new Date(y, m, 18, 10, 30),
+        //            allDay: false,
+        //            color: '#f47b09'
+        //        },
+        //        {
+        //            title: 'TOEIC',
+        //            start: new Date(y, m, 21, 14),
+        //            end: new Date(y, m, 21, 18),
+        //            allDay: false,
+        //            color: '#660a9c',
+        //            url: 'http://www.ets.org/fr/toeic'
+        //        },
+        //        {
+        //            title: 'AIOP',
+        //            start: new Date(y, m, 19, 8),
+        //            end: new Date(y, m, 19, 12),
+        //            allDay: false
+        //        }
+        //]
 </script>
 <div id="calendar" style='font-size: 13px'></div>
