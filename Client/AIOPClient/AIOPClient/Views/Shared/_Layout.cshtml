@@ -1,0 +1,107 @@
+﻿@model AIOPClient.Models.UserModel
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>@ViewBag.Title</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+    <!-- Latest compiled and minified CSS -->
+    <link href="http://netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/css/bootstrap-combined.min.css" rel="stylesheet">
+    <link href="bootstrap-datepicker/css/datepicker.css" rel="stylesheet">
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap.min.css">
+    <!-- Optional theme -->
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap-theme.min.css">
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="//netdna.bootstrapcdn.com/bootstrap/3.0.2/js/bootstrap.min.js"></script>
+
+    <!-- CSS for a beautiful calendar -->
+    <link href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css" rel="stylesheet" type="text/css" />
+    <link href="http://cdnjs.cloudflare.com/ajax/libs/fullcalendar/1.6.4/fullcalendar.css" rel="stylesheet" type="text/css" />
+
+    <!-- Script for FullCalendar -->
+    <script type="text/javascript" src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
+    <script type="text/javascript" src="http://code.jquery.com/jquery-1.9.1.js"></script>
+    <script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/fullcalendar/1.6.4/fullcalendar.min.js"></script>
+</head>
+
+<body>
+    @*If user is logged then we display the navigation menu, if not we'll display the login form*@
+    @{  AIOPClient.Models.UserSession session = null;
+        session = AIOPClient.Models.UserSession.GetInstance();    
+    }
+
+    @if (session.logged)
+    {
+        <nav class="navbar navbar-default" role="navigation">
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav">
+                    <!--To allow active links display we make a comparaison between the supposed controller's name and the real one-->
+                    <li class="@(HttpContext.Current.Request.RequestContext.RouteData.Values["controller"].ToString() == "MyCalendar" ? "active" : "")"><a href="../MyCalendar/Index"><span class="glyphicon glyphicon-home"></span>My Calendar</a></li>
+                    <li class="@(HttpContext.Current.Request.RequestContext.RouteData.Values["controller"].ToString() == "GlobalCalendar" ? "active" : "")"><a href="../GlobalCalendar/Index"><span class="glyphicon glyphicon-calendar"></span>Global Calendar</a></li>
+                    <li class="@(HttpContext.Current.Request.RequestContext.RouteData.Values["controller"].ToString() == "WorkingHours" ? "active" : "")"><a href="../WorkingHours/Index"><span class="glyphicon glyphicon-time"></span>Working Hours</a></li>
+                    <li class="@(HttpContext.Current.Request.RequestContext.RouteData.Values["controller"].ToString() == "BookRoom" ? "active" : "")"><a href="../BookRoom/Index"><span class="glyphicon glyphicon-bookmark"></span>Book Room</a></li>
+                    <li class="@(HttpContext.Current.Request.RequestContext.RouteData.Values["controller"].ToString() == "BookingStatus" ? "active" : "")"><a href="../BookingStatus/Index"><span class="glyphicon glyphicon-dashboard"></span>Booking Status</a></li>
+                    @*If user is superUser then we display the ManageBooking menu*@
+                    @{
+        bool isSuperUser = true;
+                    }
+                    @if (isSuperUser)
+                    {
+                        <li class="@(HttpContext.Current.Request.RequestContext.RouteData.Values["controller"].ToString() == "ManageBooking" ? "active" : "")"><a href="../ManageBooking/Index"><span class="glyphicon glyphicon-book"></span>Manage Booking</a></li>
+                    }
+                </ul>
+
+                <ul class="nav navbar-nav navbar-right">
+                    <li><a href="../MyCalendar/Index">@session.userName</a></li>
+                    <li><a href="#"><span class="glyphicon glyphicon-off"></span></a></li>
+                </ul>
+            </div>
+            <!-- /.navbar-collapse -->
+        </nav>
+    }
+    else
+    {
+        <div class="navbar navbar-default navbar-static-top" role="navigation">
+            <div class="container">
+                <div class="navbar-header">
+                    <a class="navbar-brand" href="#">Dar Calendar</a>
+                </div>
+                <div class="navbar-collapse collapse">
+                    <form class="navbar-form navbar-right" action="/Home/Index" method="post">
+                        @Html.AntiForgeryToken()
+                        @Html.ValidationSummary(true)
+                        <div class="form-group">
+                            @*<input type="text" placeholder="Login" class="form-control">*@
+                            @Html.LabelFor(m => m.Username)
+                            @Html.TextBoxFor(m => m.Username)
+                            @Html.ValidationMessageFor(m => m.Username)
+                        </div>
+                        <div class="form-group">
+                            @*<input type="password" placeholder="Password" class="form-control">*@
+                            @Html.LabelFor(m => m.Password)
+                            @Html.PasswordFor(m => m.Password)
+                            @Html.ValidationMessageFor(m => m.Password)
+                        </div>
+                        <button type="submit" class="btn btn-success">Sign in</button>
+                    </form>
+                </div>
+                <!--/.navbar-collapse -->
+            </div>
+        </div>
+    }
+    <div class="jumbotron">
+        <div class="container">
+            @RenderBody()
+
+            @*@Scripts.Render("~/bundles/jquery")*@
+            @RenderSection("scripts", required: false)
+        </div>
+    </div>
+    <footer>
+        <p class="text-center">&copy; AIOP 2013</p>
+    </footer>
+</body>
+</html>

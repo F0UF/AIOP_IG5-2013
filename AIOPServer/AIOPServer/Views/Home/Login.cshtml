@@ -1,0 +1,30 @@
+﻿@{
+    ViewBag.Title = "Login";
+}
+
+<h2>Login</h2>
+
+@if (!string.IsNullOrEmpty(ViewBag.AlertMessage)) {
+  <script type="text/javascript">alert("@ViewBag.AlertMessage");</script>
+} 
+
+
+
+@using (Html.BeginForm())
+{
+
+<fieldset>
+    <legend>Connexion</legend>
+    <ol>
+        <li>
+            <textarea name="username"></textarea>
+        </li>
+        <li>
+            <textarea name="mdp"></textarea>
+        </li>
+    </ol>
+    <input type="submit" value="Connexion" />
+
+
+</fieldset>
+}
