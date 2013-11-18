@@ -19,8 +19,17 @@ namespace AIOPClient.Controllers
 
         public ActionResult Index()
         {
-            getReservationList();
-            return View();
+            AIOPClient.Models.UserSession session = null;
+            session = AIOPClient.Models.UserSession.GetInstance();
+            if (!session.logged)
+            {
+                return Redirect("../Home/Index");
+            }
+            else
+            {
+                getReservationList();
+                return View();
+            }
         }
 
         public bool getReservationList()
