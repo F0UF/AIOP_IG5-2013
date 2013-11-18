@@ -13,21 +13,42 @@
                 <th>Teacher</th>
                 <th>Teaching</th>
                 <th>Promotion</th>
-                <th>Date</th>
-                <th>Start at</th>
-                <th>End at</th>
-                <th>Characteristic</th>
+                <th>Start Date</th>
+                <th>End Date</th>
+                <th>Projector</th>
+                <th>Computer</th>
+                <th>Building</th>
+                <th>Room</th>
                 <th>Action</th>
             </tr>
+            @foreach (dynamic waiting in ViewBag.waitingsList)
+            {
             <tr>
-                <td>Bernard Fallery</td>
-                <td>AIOP</td>
-                <td>IG5</td>
-                <td>02/22/13</td>
-                <td>9h45</td>
-                <td>13h00</td>
-                <td>computers</td>
-                <td>accept  refuse</td>
+                <td>@waiting.Teaching.Teacher.First_Name @waiting.Teaching.Teacher.Last_Name</td>
+                <td>@waiting.Teaching.Course.Subject.Subject_Name</td>
+                <td>@waiting.Teaching.Group.Group_Name</td>
+                <td>@waiting.Start_Date</td>
+                <td>@waiting.End_Date</td>
+                @if (waiting.Room.Projector=="true"){
+                <td>Yes</td>
+                }
+                else
+                {
+                <td>No</td>
+                }
+                @if (waiting.Room.Computer=="true"){
+                <td>Yes</td>
+                }
+                else
+                {
+                <td>No</td>
+                }
+                <td>@waiting.Room.Building.Building_Name</td>
+                <td>@waiting.Room.Room_Number</td>
+                <td><button type="button" class="btn btn-success ">accept</button>
+                    <button type="button" class="btn btn-danger ">refuse </button>
+                </td>
             </tr>
+            }
         </table>
     </div>
