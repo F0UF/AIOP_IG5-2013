@@ -19,6 +19,7 @@ namespace AIOPServer.API
     {
         AIOPContext db = new AIOPContext();
 
+        // api/planning/display?id_Teacher=XX
         [HttpGet]
         [ActionName("Display")]
         public IEnumerable<Booking> GetPlanning(int id_Teacher)
@@ -30,19 +31,7 @@ namespace AIOPServer.API
             return bookings;
         }
 
-
-        [HttpGet]
-        [ActionName("BookingStatus")]
-        public IEnumerable<Booking> GetStatus(int id_Teacher)
-        {
-            IEnumerable<Booking> bookings = null;
-
-            bookings = db.Bookings.Where(b => b.Teaching.Id_Teacher == id_Teacher);
-
-            return bookings;
-        }
-
-
+        // api/planning/display?group_name=IG4
         [HttpGet]
         [ActionName("Display")]
         public IEnumerable<Booking> GetPlanning(string Group_Name)
@@ -58,6 +47,19 @@ namespace AIOPServer.API
             return bookings;
         }
 
+
+
+
+        [HttpGet]
+        [ActionName("BookingStatus")]
+        public IEnumerable<Booking> GetStatus(int id_Teacher)
+        {
+            IEnumerable<Booking> bookings = null;
+
+            bookings = db.Bookings.Where(b => b.Teaching.Id_Teacher == id_Teacher);
+
+            return bookings;
+        }
 
         [HttpGet]
         [ActionName("Delete")]

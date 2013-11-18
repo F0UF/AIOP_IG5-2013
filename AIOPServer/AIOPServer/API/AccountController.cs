@@ -59,8 +59,10 @@ namespace AIOPServer.API
                 {
                     jo.Add("Status", 1);
                     jo.Add("Message", "User " + username + " is now connected.");
-                    jo.Add("id_user", ens.Id_Teacher);
-                    jo.Add("name", ens.Last_Name);
+                    jo.Add("Id_User", ens.Id_Teacher);
+                    jo.Add("Last_Name", ens.Last_Name);
+                    jo.Add("First_Name", ens.First_Name);
+                    jo.Add("Super_User", ens.Super_User);
                 }
                 else
                 {
