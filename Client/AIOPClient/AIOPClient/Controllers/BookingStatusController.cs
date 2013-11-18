@@ -25,12 +25,14 @@ namespace AIOPClient.Controllers
 
         public bool getReservationList()
         {
-            //Construction de l'url de l'API à appeller 
+            //Api's url building
             AIOPClient.Models.UserSession session = null;
             session = AIOPClient.Models.UserSession.GetInstance();
             String urlApi = "http://aiopninjaserver.no-ip.biz/api/planning/display?id_teacher=";
             String idUser=session.id_user.ToString();
             urlApi += idUser;
+
+            //Deserialization of the returned json
             using (var client = new WebClient())
             {
                 var result = client.DownloadString(urlApi);
