@@ -48,44 +48,16 @@ namespace AIOPServer.API
         public JObject GetsummaryHours(int id_teacher)
         {
             DateTime currentDate = new DateTime(2012, 3, 12);
-            int totalHoursToDo = 0;
-            int hoursDone = 0;
-            int hoursPlan = 0;
-            int hoursLeftToPlan = 0;
+            int totalHoursToDo;
+            int hoursDone;
+            int hoursPlan;
+            int hoursLeftToPlan;
 
-            IQueryable<Teaching> teachingQuery =
-            from teaching in db.Teachings
-            where teaching.Id_Teacher == id_teacher
-            select teaching;
+            totalHoursToDo = Teacher.getHoursToDo(db, id_teacher);
 
-            foreach (Teaching teaching in teachingQuery)
-            {
-                totalHoursToDo += teaching.Hour_Number;
-            }
+            hoursDone = Teacher.getHoursDone(db, id_teacher, currentDate);
 
-            IQueryable<Booking> bookingHoursDoneQuery =
-            from booking in db.Bookings
-            where booking.End_Date < currentDate && booking.Teaching.Id_Teacher == id_teacher && booking.State == "Validé"
-            select booking;
-
-            foreach (Booking booking in bookingHoursDoneQuery)
-            {
-                hoursDone += (int)(booking.End_Date - booking.Start_Date).TotalHours;
-                //hoursDone += (int)(booking.End_Date - booking.Start_Date).TotalSecond;
-            }
-            //hoursDone = hoursDone/3600;
-
-            IQueryable<Booking> bookingHoursPlanQuery =
-            from booking in db.Bookings
-            where booking.Start_Date > currentDate && booking.Teaching.Id_Teacher == id_teacher && booking.State == "Validé"
-            select booking;
-
-            foreach (Booking booking in bookingHoursPlanQuery)
-            {
-                hoursPlan += (int)(booking.End_Date - booking.Start_Date).TotalHours;
-                //hoursPlan += (int)(booking.End_Date - booking.Start_Date).TotalSecond;
-            }
-            //hoursPlan = hoursDone/3600;
+            hoursPlan = Teacher.getHoursPlan(db, id_teacher, currentDate);
 
             hoursLeftToPlan = totalHoursToDo - hoursPlan - hoursDone;
 
@@ -109,44 +81,16 @@ namespace AIOPServer.API
             int id_teacher = json.id_teacher;
             DateTime currentDate = json.currentDate;
 
-            int totalHoursToDo = 0;
-            int hoursDone = 0;
-            int hoursPlan = 0;
-            int hoursLeftToPlan = 0;
+            int totalHoursToDo;
+            int hoursDone;
+            int hoursPlan;
+            int hoursLeftToPlan;
 
-            IQueryable<Teaching> teachingQuery =
-            from teaching in db.Teachings
-            where teaching.Id_Teacher == id_teacher
-            select teaching;
+            totalHoursToDo = Teacher.getHoursToDo(db, id_teacher);
 
-            foreach (Teaching teaching in teachingQuery)
-            {
-                totalHoursToDo += teaching.Hour_Number;
-            }
+            hoursDone = Teacher.getHoursDone(db, id_teacher, currentDate);
 
-            IQueryable<Booking> bookingHoursDoneQuery =
-            from booking in db.Bookings
-            where booking.End_Date < currentDate && booking.Teaching.Id_Teacher == id_teacher
-            select booking;
-
-            foreach (Booking booking in bookingHoursDoneQuery)
-            {
-                hoursDone += (int)(booking.End_Date - booking.Start_Date).TotalHours;
-                //hoursDone += (int)(booking.End_Date - booking.Start_Date).TotalSecond;
-            }
-            //hoursDone = hoursDone/3600;
-
-            IQueryable<Booking> bookingHoursPlanQuery =
-            from booking in db.Bookings
-            where booking.Start_Date > currentDate && booking.Teaching.Id_Teacher == id_teacher
-            select booking;
-
-            foreach (Booking booking in bookingHoursPlanQuery)
-            {
-                hoursPlan += (int)(booking.End_Date - booking.Start_Date).TotalHours;
-                //hoursPlac += (int)(booking.End_Date - booking.Start_Date).TotalSecond;
-            }
-            //hoursPlan = hoursDone/3600;
+            hoursPlan = Teacher.getHoursPlan(db, id_teacher, currentDate);
 
             hoursLeftToPlan = totalHoursToDo - hoursPlan - hoursDone;
 

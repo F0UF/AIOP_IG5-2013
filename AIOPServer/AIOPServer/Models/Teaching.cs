@@ -43,5 +43,25 @@ namespace AIOPServer.Models
         [Column("NB_HEURE_PREVUE")]
         public int Hour_Number { get; set; }
 
+        public static Teaching createTeaching(AIOPContext db, int id_Teacher, int id_Group, int hour_Number, int id_Course)
+        {
+            Teaching teaching = new Teaching
+                   {
+                       Id_Course = id_Course,
+                       Id_Group = id_Group,
+                       Id_Teacher = id_Teacher,
+                       Hour_Number = hour_Number
+                   };
+            try
+            {
+                db.Teachings.Add(teaching);
+                db.SaveChanges();
+                return teaching;
+            }
+            catch (Exception e)
+            {
+                return null;
+            }
+        }
     }
 }

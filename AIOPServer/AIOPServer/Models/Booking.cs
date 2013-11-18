@@ -45,6 +45,42 @@ namespace AIOPServer.Models
         [DataMember]
         [Column("ETAT")]
         public String State { get; set; }
-     
+
+        public static IEnumerable<Booking> getWaitingBooking(AIOPContext db)
+        {
+            IEnumerable<Booking> bookings = null;
+            bookings = db.Bookings.Where(b => b.State == "En attente");
+            return bookings;
+        }
+
+        public static Booking acceptBooking(AIOPContext db,int id_Booking)
+        {
+            Booking bk = db.Bookings.Find(id_Booking);
+            try
+            {
+                bk.State = "Validé";
+                db.SaveChanges();
+                return bk;
+            }
+            catch (Exception e)
+            {
+                return null;
+            }
+        }
+
+        public static Booking refuseBooking(AIOPContext db, int id_Booking)
+        {
+            Booking bk = db.Bookings.Find(id_Booking);
+            try
+            {
+                bk.State = "Refusé";
+                db.SaveChanges();
+                return bk;
+            }
+            catch (Exception e)
+            {
+                return null;
+            }
+        }
     }
 }

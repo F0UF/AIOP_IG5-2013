@@ -20,7 +20,7 @@ namespace AIOPServer.API
         [ActionName("login")]
         public JObject GetLogin(string username) 
         {
-            Teacher ens = db.Teachers.SingleOrDefault(user => user.Last_Name == username);
+            Teacher ens = Teacher.getTeacher(db, username);
             JObject j = new JObject();
             dynamic jo = j;
             jo.Add("Message", "Username saught : " + username);
@@ -39,7 +39,7 @@ namespace AIOPServer.API
             string username = json.Username;
             string password = json.Password;
 
-            Teacher ens = db.Teachers.SingleOrDefault(user => user.Last_Name == username);
+            Teacher ens = Teacher.getTeacher(db, username);
 
             JObject jo = new JObject();
 
