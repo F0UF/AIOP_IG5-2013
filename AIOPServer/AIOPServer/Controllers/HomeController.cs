@@ -52,34 +52,6 @@ namespace AIOPServer.Controllers
 
         public dynamic isLoginOk(string username, string mdp)
         {
-
-            //    string postData = "username=tom";
-
-            //    // create the POST request
-            //    HttpWebRequest webRequest = (HttpWebRequest)WebRequest.Create("http://localhost:55080/api/account/login");
-            //    webRequest.Method = "POST";
-            //    webRequest.ContentType = "application/x-www-form-urlencoded";
-            //    webRequest.ContentLength = postData.Length;
-
-            //    // POST the data
-            //    using (StreamWriter requestWriter2 = new StreamWriter(webRequest.GetRequestStream()))
-            //    {
-            //        requestWriter2.Write(postData);
-            //    }
-
-            //    //  This actually does the request and gets the response back
-            //    HttpWebResponse resp = (HttpWebResponse)webRequest.GetResponse();
-
-            //    string responseData = string.Empty;
-
-            //    using (StreamReader responseReader = new StreamReader(webRequest.GetResponse().GetResponseStream()))
-            //    {
-            //        // dumps the HTML from the response into a string variable
-            //        responseData = responseReader.ReadToEnd();
-            //    }
-
-            //    return responseData;
-
             using (var client = new WebClient())
             {
                 client.Headers[HttpRequestHeader.ContentType] = "application/json";
