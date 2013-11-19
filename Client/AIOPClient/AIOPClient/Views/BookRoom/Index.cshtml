@@ -75,21 +75,16 @@
         Computers
     </label>
 
-    <!-- DATE PICKER -->
-
-    <script>$(".input-group.date").datepicker({ autoclose: true, todayHighlight: true });</script>
-
     <div class="form-group row">
-        <div class="col-xs-8">
-            <label class="control-label">Effective Date</label>
-            <div class="input-group date" id="dp3" data-date="12-02-2012" data-date-format="mm-dd-yyyy">
-                <input class="form-control" type="text" readonly="" value="12-02-2012">
-                <span class="input-group-addon">
-                    <i class="glyphicon glyphicon-calendar"></i>
-                </span>
-            </div>
+        <div class="input-group">
+            <input class="form-control datepicker" type="text" value="12-02-2012">
+            <span class="input-group-addon"><label class="glyphicon glyphicon-calendar"></label></span>
         </div>
     </div>
 
     <button type="submit" class="btn btn-default">Submit</button>
 </form>
+
+<!-- DATE PICKER -->
+
+<script>$(".datepicker").datepicker({ autoclose: true, todayHighlight: true });</script>

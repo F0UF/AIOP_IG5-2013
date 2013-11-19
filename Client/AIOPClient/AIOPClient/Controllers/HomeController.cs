@@ -18,7 +18,7 @@ namespace AIOPClient.Controllers
 {
     public class HomeController : Controller
     {
-
+        String errorMsg;
         // GET: /Home/
         [HttpGet]
         public ActionResult Index()
@@ -34,11 +34,12 @@ namespace AIOPClient.Controllers
         {
             if (IsLoginOK(model))
             {
-                return RedirectToAction("Index", "Home");
+                return RedirectToAction("Index", "MyCalendar");
             }
-
-
-            return View(model);
+            else
+            {
+                return Content("<script> window.alert(\'" + errorMsg + "\')</script>;<script language=\"JavaScript\">window.location.href='../Home/Index'</script>;");
+            }
         }
 
         private bool IsLoginOK(UserModel model)
@@ -58,7 +59,9 @@ namespace AIOPClient.Controllers
                 session = UserSession.GetInstance();
 
                 session.userName = jo.name;
-                session.id_user = jo.id_user;
+                // session.id_user = jo.id_user;
+
+                errorMsg = jo.Message;
 
                 if (jo.Status == 0)
                 {

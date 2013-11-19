@@ -59,9 +59,7 @@ namespace Login.Controllers
                 {
                     return false;
                 }
-
             }
         }
-
     }
 }

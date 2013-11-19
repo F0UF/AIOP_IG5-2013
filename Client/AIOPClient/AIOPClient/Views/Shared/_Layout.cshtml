@@ -9,11 +9,19 @@
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
 
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+
     <!-- Bootstrap -->
-    <link href="bootstrap-datepicker/css/datepicker.css" rel="stylesheet">
     <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap.min.css">
     <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap-theme.min.css">
     <script src="//netdna.bootstrapcdn.com/bootstrap/3.0.2/js/bootstrap.min.js"></script>
+
+    <!-- Datepicker -->
+    <link href="~/Content/themes/base/datepicker.css" rel="stylesheet">
+    <script src="~/Scripts/bootstrap-datepicker.js" type="text/javascript"></script>
+    <script type="text/javascript">
+        $("#datepicker").datepicker();
+    </script>
 
     <!-- CSS for a beautiful calendar -->
     <link href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css" rel="stylesheet" type="text/css" />
@@ -21,7 +29,7 @@
 
     <!-- Script for FullCalendar -->
     <script type="text/javascript" src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
-    <script type="text/javascript" src="http://code.jquery.com/jquery-1.9.1.js"></script>
+    @*<script type="text/javascript" src="http://code.jquery.com/jquery-1.9.1.js"></script>*@
     <script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/fullcalendar/1.6.4/fullcalendar.min.js"></script>
 </head>
 
@@ -44,7 +52,7 @@
                     <li class="@(HttpContext.Current.Request.RequestContext.RouteData.Values["controller"].ToString() == "BookingStatus" ? "active" : "")"><a href="../BookingStatus/Index"><span class="glyphicon glyphicon-dashboard"></span> Booking Status</a></li>
                     @*If user is superUser then we display the ManageBooking menu*@
                     @{
-        bool isSuperUser = true;
+                        bool isSuperUser = true;
                     }
                     @if (isSuperUser)
                     {
@@ -98,6 +106,8 @@
             @RenderSection("scripts", required: false)
         </div>
     </div>
+    <script>$(function() { $('#datepicker').datepicker(); });</script>
+
     <footer>
         <p class="text-center">&copy; AIOP 2013</p>
     </footer>
