@@ -42,6 +42,12 @@ namespace AIOPClient.Controllers
             }
         }
 
+        public ActionResult LogOut()
+        {
+            UserSession.DeleteInstance();
+            return RedirectToAction("Index", "Home");
+        }
+
         private bool IsLoginOK(UserModel model)
         {
             using (var client = new WebClient())

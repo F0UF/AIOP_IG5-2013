@@ -67,7 +67,7 @@
     </div>
 
     <label for="projector" class="inline checkbox">
-        <input id="rojector" name="projector" type="checkbox">
+        <input id="projector" name="projector" type="checkbox">
         Projector
     </label>
     <label for="computers" class="inline checkbox">
@@ -75,16 +75,25 @@
         Computers
     </label>
 
+    <!-- DATE PICKER -->
+
     <div class="form-group row">
         <div class="input-group">
             <input class="form-control datepicker" type="text" value="12-02-2012">
-            <span class="input-group-addon"><label class="glyphicon glyphicon-calendar"></label></span>
+            <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
         </div>
+
+       @* <div class="input-group">
+        <input id="timepicker" type="text" class="timepicker">
+        <span class="input-group-addon"><i class="glyphicon glyphicon-time"></i></span>
+        </div>*@
     </div>
 
     <button type="submit" class="btn btn-default">Submit</button>
 </form>
 
-<!-- DATE PICKER -->
-
 <script>$(".datepicker").datepicker({ autoclose: true, todayHighlight: true });</script>
+<script type="text/javascript">
+    $('#timepicker').timepicker();
+</script>
+

@@ -17,6 +17,8 @@ namespace AIOPClient.Models
 	    private UserSession()
 	    {
             logged = false;
+            userName = "";
+            id_user = 0;
 	    }
 
 	    // La méthode GetInstance doit être Shared
@@ -29,10 +31,14 @@ namespace AIOPClient.Models
 			    {
 				    instance = new UserSession();
 			    }
-
 			    // On retourne l'instance de MonSingleton
 			    return instance;
 		    }
 	    }
+
+        public static void DeleteInstance()
+        {
+            instance = null;
+        }
     }
 }
