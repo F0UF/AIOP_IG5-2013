@@ -32,13 +32,15 @@ namespace AIOPClient.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Index(UserModel model)
         {
-            if (IsLoginOK(model))
+            if (ModelState.IsValid && IsLoginOK(model))
             {
                 return RedirectToAction("Index", "MyCalendar");
             }
             else
             {
-                return Content("<script> window.alert(\'" + errorMsg + "\')</script>;<script language=\"JavaScript\">window.location.href='../Home/Index'</script>;");
+                ModelState.AddModelError("", "");
+                return View();
+                //return Content("<script> window.alert(\'" + errorMsg + "\')</script>;<script language=\"JavaScript\">window.location.href='../Home/Index'</script>;");
             }
         }
 
