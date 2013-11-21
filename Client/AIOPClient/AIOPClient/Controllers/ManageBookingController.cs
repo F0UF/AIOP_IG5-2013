@@ -23,6 +23,10 @@ namespace AIOPClient.Controllers
             {
                 return Redirect("../Home/Index");
             }
+            else if (!session.admin)
+            {
+                return Redirect("../MyCalendar/Index");
+            }
             else
             {
                 getWaitingList();
