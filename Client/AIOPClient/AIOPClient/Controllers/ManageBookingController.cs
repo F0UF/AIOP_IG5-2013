@@ -82,7 +82,7 @@ namespace AIOPClient.Controllers
                 if (result == null)
                     return View();
             }
-            return RedirectToAction("Index", "ManageBooking");
+            return View();
         }
     }
 }

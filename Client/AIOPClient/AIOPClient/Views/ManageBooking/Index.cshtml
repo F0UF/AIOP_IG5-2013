@@ -2,7 +2,6 @@
     ViewBag.Title = "Manage Booking";
 }
 
-
 <div class="panel panel-default">
         <!-- Default panel contents -->
         <div class="panel-heading"><center>Administration</center></div>
@@ -56,6 +55,7 @@
                                 $.post("@Url.Action("acceptReservation", "ManageBooking")",
                                     { id: idBook }, function (data) {
                                         document.getElementById("myTable").deleteRow(@waiting.Id_Booking);
+                                        window.location.reload(true);
                                     });
                             });
                         });
