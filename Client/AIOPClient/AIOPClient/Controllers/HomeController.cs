@@ -67,10 +67,6 @@ namespace AIOPClient.Controllers
                 UserSession session = null;
                 session = UserSession.GetInstance();
 
-                session.userName = jo.First_Name + " " + jo.Last_Name;
-                session.admin = jo.Super_User;
-                session.id_user = jo.Id_User;
-
                 errorMsg = jo.Message;
 
                 if (jo.Status == 0)
@@ -80,6 +76,9 @@ namespace AIOPClient.Controllers
                 else
                 {
                     session.logged = true;
+                    session.userName = jo.First_Name + " " + jo.Last_Name;
+                    session.admin = jo.Super_User;
+                    session.id_user = jo.Id_User;
                     return true;
                 }
             }
