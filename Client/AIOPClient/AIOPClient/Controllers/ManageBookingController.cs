@@ -61,5 +61,22 @@ namespace AIOPClient.Controllers
             }
             return true;
         }
+
+        [HttpPost]
+        public ActionResult acceptReservation(int id)
+        {
+            Debug.WriteLine(id);
+            //Api's url building
+            String urlApi = "http://aiopninjaserver.no-ip.biz/api/admin/Accept?Id_Booking=" + id.ToString();
+
+            using (var client = new WebClient())
+            {
+                var result = client.DownloadString(urlApi);
+                //If return is null then the reservations wasn't accepted properly
+                if (result == null)
+                    return View();
+            }
+            return View();
+        }
     }
 }

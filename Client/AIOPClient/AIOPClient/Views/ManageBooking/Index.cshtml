@@ -8,7 +8,7 @@
         <div class="panel-heading"><center>Administration</center></div>
 
         <!-- Table -->
-        <table class="table">
+        <table id="myTable" class="table">
             <tr>
                 <th>Teacher</th>
                 <th>Teaching</th>
@@ -45,8 +45,33 @@
                 }
                 <td>@waiting.Room.Building.Building_Name</td>
                 <td>@waiting.Room.Room_Number</td>
-                <td><button type="button" class="btn btn-success btn-xs">accept</button>
-                    <button type="button" class="btn btn-danger btn-xs">refuse</button>
+                <td>
+                    <button type="button" id="btnAccept" class="btn btn-success btn-xs">Accept</button>
+                    <script>
+                        $(function () {
+                            $("#btnAccept").click(function (e) {
+                                e.preventDefault();
+                                var idBook = 'waiting.Id_Booking'
+                                $.post("@Url.Action("acceptReservation","ManageBooking")",
+                                    { id: idBook }, function (data) {
+                                        document.getElementById("myTable").deleteRow(0);
+                                    });
+                            });
+                        });
+                    </script>
+                    <button type="button" id="btnRefuse" class="btn btn-danger btn-xs">Refuse</button>
+                    <script>
+                        $(function () {
+                            $("#btnRefuse").click(function (e) {
+                                e.preventDefault();
+                                var idBook = 'waiting.Id_Booking'
+                                $.post("@Url.Action("refuseReservation","ManageBooking")",
+                                    { id: idBook }, function (data) {
+                                        // do something with the response
+                                    });
+                            });
+                        });
+                    </script>
                 </td>
             </tr>
             }

@@ -39,6 +39,7 @@ namespace AIOPClient.Controllers
             session = AIOPClient.Models.UserSession.GetInstance();
             String urlApi = "http://aiopninjaserver.no-ip.biz/api/planning/display?id_teacher=";
             String idUser=session.id_user.ToString();
+            Debug.WriteLine(idUser);
             urlApi += idUser;
 
             //Deserialization of the returned json
