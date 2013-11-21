@@ -20,9 +20,9 @@ namespace AIOPServer.API
         // GET api/teacher/accountsList
         [HttpGet]
         [ActionName("accountsList")]
-        public IEnumerable<Teacher> GetEnseignants()
+        public IEnumerable<Teacher> GetTeachers()
         {
-            return db.Teachers.AsEnumerable();
+            return Teacher.GetTeachers(db);
         }
 
         // GET api/Enseignant/5
@@ -49,9 +49,9 @@ namespace AIOPServer.API
         {
             DateTime currentDate = new DateTime(2012, 3, 12);
             int totalHoursToDo;
-            int hoursDone;
-            int hoursPlan;
-            int hoursLeftToPlan;
+            float hoursDone;
+            float hoursPlan;
+            float hoursLeftToPlan;
 
             totalHoursToDo = Teacher.getHoursToDo(db, id_teacher);
 
@@ -60,8 +60,6 @@ namespace AIOPServer.API
             hoursPlan = Teacher.getHoursPlan(db, id_teacher, currentDate);
 
             hoursLeftToPlan = totalHoursToDo - hoursPlan - hoursDone;
-
-           // return "Summary : " + totalHoursToDo + " " + hoursPlan + " " + hoursDone + " " + hoursLeftToPlan;
 
             JObject jo = new JObject();
 
@@ -82,9 +80,9 @@ namespace AIOPServer.API
             DateTime currentDate = json.currentDate;
 
             int totalHoursToDo;
-            int hoursDone;
-            int hoursPlan;
-            int hoursLeftToPlan;
+            float hoursDone;
+            float hoursPlan;
+            float hoursLeftToPlan;
 
             totalHoursToDo = Teacher.getHoursToDo(db, id_teacher);
 
