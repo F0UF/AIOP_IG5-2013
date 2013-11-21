@@ -7,6 +7,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using AIOPClient.Models;
+using System.Text;
 
 namespace AIOPClient.Controllers
 {
@@ -41,6 +42,7 @@ namespace AIOPClient.Controllers
             //Deserialization of the returned json
             using (var client = new WebClient())
             {
+                client.Encoding = Encoding.UTF8;
                 var result = client.DownloadString(urlApi);
                 JArray jsonVal = JArray.Parse(result) as JArray;
                 dynamic waitings = jsonVal;
@@ -50,7 +52,7 @@ namespace AIOPClient.Controllers
         }
 
         [HttpPost]
-        public bool refuseReservation(int id)
+        public ActionResult refuseReservation(int id)
         {
             Debug.WriteLine(id);
             //Api's url building
@@ -61,9 +63,9 @@ namespace AIOPClient.Controllers
                 var result = client.DownloadString(urlApi);
                 //If return is null then the reservations wasn't refused properly
                 if (result == null)
-                    return false;
+                    return View();
             }
-            return true;
+            return RedirectToAction("Index", "ManageBooking");
         }
 
         [HttpPost]
@@ -80,7 +82,7 @@ namespace AIOPClient.Controllers
                 if (result == null)
                     return View();
             }
-            return View();
+            return RedirectToAction("Index", "ManageBooking");
         }
     }
 }

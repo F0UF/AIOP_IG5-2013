@@ -13,6 +13,8 @@ using System.Web.Mvc;
 using System.Web.Script.Serialization;
 using Newtonsoft.Json.Linq;
 using System.Diagnostics;
+using Newtonsoft.Json.Linq;
+
 
 namespace AIOPClient.Controllers
 {
@@ -30,7 +32,19 @@ namespace AIOPClient.Controllers
                 return Redirect("../Home/Index");
             }
             else
-                return View();
+            {
+                using (var client = new WebClient())
+                
+                {
+                    client.Encoding = Encoding.UTF8;
+                    var result = client.DownloadString("http://aiopninjaserver.no-ip.biz/api/subject/getsubjects");
+                    JArray jsonVal = JArray.Parse(result) as JArray;
+                    dynamic subjects = jsonVal;
+                    ViewBag.SubjectList = subjects;
+                    return View();
+                }
+             
+            }
         }
 
         [HttpPost]

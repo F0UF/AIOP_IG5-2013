@@ -21,6 +21,7 @@
                 <th>Room</th>
                 <th>Action</th>
             </tr>
+
             @foreach (dynamic waiting in ViewBag.waitingsList)
             {
             <tr>
@@ -46,28 +47,28 @@
                 <td>@waiting.Room.Building.Building_Name</td>
                 <td>@waiting.Room.Room_Number</td>
                 <td>
-                    <button type="button" id="btnAccept" class="btn btn-success btn-xs">Accept</button>
+                    <button type="button" id="btnAccept-@waiting.Id_Booking" class="btn btn-success btn-xs">Accept</button>
                     <script>
                         $(function () {
-                            $("#btnAccept").click(function (e) {
+                            $("#btnAccept-@waiting.Id_Booking").click(function (e) {
                                 e.preventDefault();
-                                var idBook = 'waiting.Id_Booking'
-                                $.post("@Url.Action("acceptReservation","ManageBooking")",
+                                var idBook = @waiting.Id_Booking
+                                $.post("@Url.Action("acceptReservation", "ManageBooking")",
                                     { id: idBook }, function (data) {
-                                        document.getElementById("myTable").deleteRow(0);
+                                        document.getElementById("myTable").deleteRow(@waiting.Id_Booking);
                                     });
                             });
                         });
                     </script>
-                    <button type="button" id="btnRefuse" class="btn btn-danger btn-xs">Refuse</button>
+                    <button type="button" id="btnRefuse-@waiting.Id_Booking" class="btn btn-danger btn-xs">Refuse</button>
                     <script>
                         $(function () {
-                            $("#btnRefuse").click(function (e) {
+                            $("#btnRefuse-@waiting.Id_Booking").click(function (e) {
                                 e.preventDefault();
-                                var idBook = 'waiting.Id_Booking'
+                                var idBook = @waiting.Id_Booking
                                 $.post("@Url.Action("refuseReservation","ManageBooking")",
                                     { id: idBook }, function (data) {
-                                        // do something with the response
+                                        document.getElementById("myTable").deleteRow(@waiting.Id_Booking);
                                     });
                             });
                         });

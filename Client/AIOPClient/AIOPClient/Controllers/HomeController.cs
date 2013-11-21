@@ -54,6 +54,7 @@ namespace AIOPClient.Controllers
         {
             using (var client = new WebClient())
             {
+                client.Encoding = Encoding.UTF8;
                 client.Headers[HttpRequestHeader.ContentType] = "application/json";
 
                 JavaScriptSerializer js = new JavaScriptSerializer();
