@@ -54,6 +54,7 @@ namespace AIOPClient.Controllers
         {
             using (var client = new WebClient())
             {
+                client.Encoding = Encoding.UTF8;
                 client.Headers[HttpRequestHeader.ContentType] = "application/json";
 
                 JavaScriptSerializer js = new JavaScriptSerializer();
@@ -66,9 +67,6 @@ namespace AIOPClient.Controllers
                 UserSession session = null;
                 session = UserSession.GetInstance();
 
-                session.userName = jo.name;
-                // session.id_user = jo.id_user;
-
                 errorMsg = jo.Message;
 
                 if (jo.Status == 0)
@@ -78,6 +76,9 @@ namespace AIOPClient.Controllers
                 else
                 {
                     session.logged = true;
+                    session.userName = jo.First_Name + " " + jo.Last_Name;
+                    session.admin = jo.Super_User;
+                    session.id_user = jo.Id_User;
                     return true;
                 }
             }

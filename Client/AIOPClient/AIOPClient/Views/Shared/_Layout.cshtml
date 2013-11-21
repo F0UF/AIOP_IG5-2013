@@ -48,30 +48,34 @@
     @if (session.logged)
     {
         <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
-            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbarDarCalendar">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="#">Dar Calendar</a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbarDarCalendar">
                 <ul class="nav navbar-nav">
                     <!--To allow active links display we make a comparaison between the supposed controller's name and the real one-->
-                    <li class="@(HttpContext.Current.Request.RequestContext.RouteData.Values["controller"].ToString() == "MyCalendar" ? "active" : "")"><a href="../MyCalendar/Index"><span class="glyphicon glyphicon-home"></span>My Calendar</a></li>
-                    <li class="@(HttpContext.Current.Request.RequestContext.RouteData.Values["controller"].ToString() == "GlobalCalendar" ? "active" : "")"><a href="../GlobalCalendar/Index"><span class="glyphicon glyphicon-calendar"></span>Global Calendar</a></li>
-                    <li class="@(HttpContext.Current.Request.RequestContext.RouteData.Values["controller"].ToString() == "WorkingHours" ? "active" : "")"><a href="../WorkingHours/Index"><span class="glyphicon glyphicon-time"></span>Working Hours</a></li>
-                    <li class="@(HttpContext.Current.Request.RequestContext.RouteData.Values["controller"].ToString() == "BookRoom" ? "active" : "")"><a href="../BookRoom/Index"><span class="glyphicon glyphicon-bookmark"></span>Book Room</a></li>
-                    <li class="@(HttpContext.Current.Request.RequestContext.RouteData.Values["controller"].ToString() == "BookingStatus" ? "active" : "")"><a href="../BookingStatus/Index"><span class="glyphicon glyphicon-dashboard"></span>Booking Status</a></li>
+                    <li class="@(HttpContext.Current.Request.RequestContext.RouteData.Values["controller"].ToString() == "MyCalendar" ? "active" : "")"><a href="../MyCalendar/Index"><span class="glyphicon glyphicon-home"></span> My Calendar</a></li>
+                    <li class="@(HttpContext.Current.Request.RequestContext.RouteData.Values["controller"].ToString() == "GlobalCalendar" ? "active" : "")"><a href="../GlobalCalendar/Index"><span class="glyphicon glyphicon-calendar"></span> Global Calendar</a></li>
+                    <li class="@(HttpContext.Current.Request.RequestContext.RouteData.Values["controller"].ToString() == "WorkingHours" ? "active" : "")"><a href="../WorkingHours/Index"><span class="glyphicon glyphicon-time"></span> Working Hours</a></li>
+                    <li class="@(HttpContext.Current.Request.RequestContext.RouteData.Values["controller"].ToString() == "BookRoom" ? "active" : "")"><a href="../BookRoom/Index"><span class="glyphicon glyphicon-bookmark"></span> Book Room</a></li>
+                    <li class="@(HttpContext.Current.Request.RequestContext.RouteData.Values["controller"].ToString() == "BookingStatus" ? "active" : "")"><a href="../BookingStatus/Index"><span class="glyphicon glyphicon-dashboard"></span> Booking Status</a></li>
                     @*If user is superUser then we display the ManageBooking menu*@
-                    @{
-        bool isSuperUser = true;
-                    }
-                    @if (isSuperUser)
+                    @if (session.admin)
                     {
                         <li class="@(HttpContext.Current.Request.RequestContext.RouteData.Values["controller"].ToString() == "ManageBooking" ? "active" : "")"><a href="../ManageBooking/Index"><span class="glyphicon glyphicon-book"></span>Manage Booking</a></li>
                     }
                 </ul>
-
                 <ul class="nav navbar-nav navbar-right">
                     <li><a href="../MyCalendar/Index">@session.userName</a></li>
-                    <li><a href="../Home/LogOut" id="popoverData" rel="popover" data-placement="bottom" data-original-title="Do you really want to log out ?" data-trigger="hover"><span class=" glyphicon glyphicon-off"></span></a></li>
+                    <li><a href="../Home/LogOut" id="popoverOption" rel="popover" data-placement="bottom" data-original-title="Do you really want to log out ?" data-trigger="hover"><span class=" glyphicon glyphicon-off"></span></a></li>
                 </ul>
             </div>
-            <!-- /.navbar-collapse -->
         </nav>
     }
     else
@@ -79,9 +83,15 @@
         <div class="navbar navbar-default navbar-static-top" role="navigation">
             <div class="container">
                 <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbarDarCalendar">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
                     <a class="navbar-brand" href="#">Dar Calendar</a>
                 </div>
-                <div class="navbar-collapse collapse">
+                <div class="navbar-collapse collapse" id="navbarDarCalendar">
                     <form class="navbar-form navbar-right" action="/Home/Index" method="post">
                         @Html.AntiForgeryToken()
                         @if (!ViewData.ModelState.IsValid)
@@ -105,7 +115,6 @@
                         <button type="submit" class="btn btn-success">Sign in</button>
                     </form>
                 </div>
-                <!--/.navbar-collapse -->
             </div>
         </div>
     }
