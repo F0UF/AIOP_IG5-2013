@@ -54,9 +54,9 @@ namespace AIOPServer.Models
             return totalHoursToDo;
         }
 
-        public static int getHoursDone(AIOPContext db, int id_teacher, DateTime currentDate)
+        public static float getHoursDone(AIOPContext db, int id_teacher, DateTime currentDate)
         {
-            int hoursDone = 0;
+            float hoursDone = 0;
 
             IQueryable<Booking> bookingHoursDoneQuery =
             from booking in db.Bookings
@@ -65,17 +65,17 @@ namespace AIOPServer.Models
 
             foreach (Booking booking in bookingHoursDoneQuery)
             {
-                hoursDone += (int)(booking.End_Date - booking.Start_Date).TotalHours;
-                //hoursDone += (int)(booking.End_Date - booking.Start_Date).TotalSecond;
+                //hoursDone += (int)(booking.End_Date - booking.Start_Date).TotalHours;
+                hoursDone += (int)(booking.End_Date - booking.Start_Date).TotalSeconds;
             }
-            //hoursDone = hoursDone/3600;
+            hoursDone = hoursDone/3600;
 
             return hoursDone;
         }
 
-        public static int getHoursPlan(AIOPContext db, int id_teacher, DateTime currentDate)
+        public static float getHoursPlan(AIOPContext db, int id_teacher, DateTime currentDate)
         {
-            int hoursPlan = 0;
+            float hoursPlan = 0;
 
             IQueryable<Booking> bookingHoursPlanQuery =
             from booking in db.Bookings
@@ -84,10 +84,10 @@ namespace AIOPServer.Models
 
             foreach (Booking booking in bookingHoursPlanQuery)
             {
-                hoursPlan += (int)(booking.End_Date - booking.Start_Date).TotalHours;
-                //hoursPlan += (int)(booking.End_Date - booking.Start_Date).TotalSecond;
+                //hoursPlan += (int)(booking.End_Date - booking.Start_Date).TotalHours;
+                hoursPlan += (int)(booking.End_Date - booking.Start_Date).TotalSeconds;
             }
-            //hoursPlan = hoursDone/3600;
+            hoursPlan = hoursPlan/3600;
 
             return hoursPlan;
         }
