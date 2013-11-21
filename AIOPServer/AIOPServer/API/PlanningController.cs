@@ -19,153 +19,93 @@ namespace AIOPServer.API
     {
         AIOPContext db = new AIOPContext();
 
-        // api/planning/display?id_Teacher=XX
         [HttpGet]
         [ActionName("Display")]
         public IEnumerable<Booking> GetPlanning(int id_Teacher)
         {
-            IEnumerable<Booking> bookings = null;
-
-            bookings = db.Bookings.Where(b => b.Teaching.Id_Teacher == id_Teacher & b.State == "Validé");
-
-            return bookings;
+            return Booking.validBooking(db, id_Teacher);
         }
-
-        // api/planning/display?group_name=IG4
-        [HttpGet]
-        [ActionName("Display")]
-        public IEnumerable<Booking> GetPlanning(string Group_Name)
-        {
-            IEnumerable<Booking> bookings = null;
-
-            //bookings = from b in db.Bookings
-            //           where (b.Teaching.Group.Group_Name == Group_Name)
-            //           select b;
-
-            bookings = db.Bookings.Where(b => b.Teaching.Group.Group_Name.StartsWith(Group_Name) & b.State == "Validé");
-
-            return bookings;
-        }
-
-
 
 
         [HttpGet]
         [ActionName("BookingStatus")]
         public IEnumerable<Booking> GetStatus(int id_Teacher)
         {
-            IEnumerable<Booking> bookings = null;
-
-            bookings = db.Bookings.Where(b => b.Teaching.Id_Teacher == id_Teacher);
-
-            return bookings;
+            return Booking.getStatus(db, id_Teacher);
         }
+
+
+        [HttpGet]
+        [ActionName("Display")]
+        public IEnumerable<Booking> GetPlanning(string Group_Name)
+        {
+            //bookings = from b in db.Bookings
+            //           where (b.Teaching.Group.Group_Name == Group_Name)
+            //           select b;
+
+            return Booking.getPanningGroups(db,Group_Name);
+        }
+
 
         [HttpGet]
         [ActionName("Delete")]
-        public String DeleteBooking(int id_Booking)
+        public JObject DeleteBooking(int id_Booking)
         {
-            try
-            {
-                using (var context = new AIOPContext())
-                {
-                    var bk = new Booking { Id_Booking = id_Booking };
-                    context.Bookings.Attach(bk);
-                    context.Bookings.Remove(bk);
-                    context.SaveChanges();
-                    return "ok";
-                }
-            }
-            catch (Exception e)
-            {
-                return e + "Suppression impossible";
-            }
+            JObject jo = new JObject();
+            jo.Add("Status", Booking.deleteBooking(db, id_Booking)); 
+            return jo;
         }
 
         [HttpPost]
         [ActionName("CreateBooking")]
-        public void PostBooking(JObject json)
+        public Booking PostBooking(JObject json)
         {
             dynamic jo = json;
+            int Id_Teacher = jo.Id_Teacher;
+            int Capacity = jo.Capacity;
             string Group_Name = jo.Group_Name;
             string Subject_Name = jo.Subject_Name;
             string Type = jo.Type;
             bool Projector = jo.Projector;
             bool Computer = jo.Computer;
             DateTime Date = jo.Date;
-            DateTime Start_At = jo.Start_At;
-            DateTime End_At = jo.End_At;
+            DateTime Start_Time = jo.Start_At;
+            DateTime End_Time = jo.End_At;
 
-            JObject result = new JObject();
+            Teaching teaching = Teaching.existTeaching(db, Id_Teacher, Group_Name, Subject_Name, Type);
 
-            IEnumerable<Teaching> teachings = null;
-
-            teachings = db.Teachings.Where(t => t.Course.Course_Type.Course_Type_Name == Type && t.Course.Subject.Subject_Name == Subject_Name);
-
-            if (teachings == null)
+            if (teaching == null)
             {
-                result.Add("Status", 0);
+                return null;
             }
+
+            Room Perfect_Room = Room.getPerfectRoom(db, End_Time, Start_Time, Projector, Computer, Capacity);
+
+            if (Perfect_Room != null)
+            {
+                return Booking.addBooking(db, teaching, Perfect_Room, Start_Time, End_Time);
+            }
+            else return null;
         }
 
         [HttpGet]
         [ActionName("CreateBooking")]
-        public String GetBooking(int Id_Teacher, string Group_Name, string Subject_Name, string Type, bool Projector, bool Computer, int Capacity)
+        public Booking GetBooking(int Id_Teacher, string Group_Name, string Subject_Name, string Type, bool Projector, bool Computer, int Capacity, DateTime End_Time, DateTime Start_Time)
         {
-            try
+            Teaching teaching = Teaching.existTeaching(db, Id_Teacher, Group_Name, Subject_Name, Type);
+
+            if (teaching == null)
             {
-                using (var context = new AIOPContext())
-                {
-                    DateTime End_Time = DateTime.Today;
-                    DateTime Start_Time = DateTime.Today;
-                    Teaching teaching = db.Teachings.SingleOrDefault(t => t.Course.Course_Type.Course_Type_Name == Type && t.Course.Subject.Subject_Name == Subject_Name && t.Group.Group_Name == Group_Name && t.Id_Teacher == Id_Teacher);
-
-                    if (teaching == null)
-                    {
-                        return "teaching null";
-                    }
-
-                    IEnumerable<Room> bookedRooms =
-                    from booking in db.Bookings
-                    where booking.End_Date <= End_Time && booking.Start_Date >= Start_Time
-                    select booking.Room;
-
-                    IEnumerable<Room> AllRooms = null;
-                    AllRooms = db.Rooms;
-
-                    IEnumerable<Room> FreeRooms = null;
-                    FreeRooms = AllRooms.Except(bookedRooms);
-
-                    IEnumerable<Room> GoodRooms = null;
-                    GoodRooms = FreeRooms.Where(r => r.Projector == Projector && r.Computer == Computer && r.Capacity >= Capacity);
-
-                    IEnumerable<Room> PerfectRooms = GoodRooms.OrderBy(r => r.Capacity);
-
-                    if (PerfectRooms != null)
-                    {
-                        Booking bk = new Booking
-                            {
-                                Id_Teaching = teaching.Id_Teaching,
-                                Id_Room = PerfectRooms.First().Id_Room,
-                                State = "En attente",
-                                Start_Date = Start_Time,
-                                End_Date = End_Time,
-                            };
-
-                        if (bk == null)
-                            return "nulll";
-
-                        context.Bookings.Add(bk);
-                        context.SaveChanges();
-                        return "ok";
-                    }
-                    else return "Perfect rooms null";
-                }
+                return null;
             }
-            catch (Exception e)
+
+            Room Perfect_Room = Room.getPerfectRoom(db, End_Time, Start_Time, Projector, Computer, Capacity);
+
+            if (Perfect_Room != null)
             {
-                return e + "Réservation impossible";
+                return Booking.addBooking(db, teaching, Perfect_Room, Start_Time, End_Time);
             }
+            else return null;
         }
     }
 }

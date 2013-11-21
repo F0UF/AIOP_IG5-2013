@@ -63,5 +63,12 @@ namespace AIOPServer.Models
                 return null;
             }
         }
+
+        public static Teaching existTeaching(AIOPContext db, int Id_Teacher, string Group_Name, string Subject_Name, string Type)
+        {
+            return db.Teachings.SingleOrDefault(t => t.Course.Course_Type.Course_Type_Name == Type && t.Course.Subject.Subject_Name == Subject_Name && t.Group.Group_Name == Group_Name && t.Id_Teacher == Id_Teacher);
+        }
+
+
     }
 }

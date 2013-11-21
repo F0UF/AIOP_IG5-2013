@@ -41,5 +41,40 @@ namespace AIOPServer.Models
         [Column("CAPACITE")]
         public int Capacity { get; set; }
 
+
+        public static IEnumerable<Room> getbookedRooms(AIOPContext db, DateTime End_Time, DateTime Start_Time)
+        {
+            IEnumerable<Room> bookedRooms =
+                    from booking in db.Bookings
+                    where booking.End_Date <= End_Time && booking.Start_Date >= Start_Time
+                    select booking.Room;
+            return bookedRooms;
+        }
+
+        public static IEnumerable<Room> getFreeRooms(AIOPContext db, DateTime End_Time, DateTime Start_Time)
+        {
+            IEnumerable<Room> bookedRooms = getbookedRooms(db, End_Time, Start_Time);
+            IEnumerable<Room> FreeRooms = db.Rooms.Except(bookedRooms);
+            return FreeRooms;
+        }
+
+        public static Room getPerfectRoom(AIOPContext db, DateTime End_Time, DateTime Start_Time, bool Projector, bool Computer, int Capacity)
+        {
+            IEnumerable<Room> FreeRooms = getFreeRooms(db, End_Time, Start_Time);
+            if (FreeRooms.Count() == 0)
+                return null;
+
+            IEnumerable<Room> GoodRooms = null;
+            GoodRooms = FreeRooms.Where(r => r.Projector == Projector && r.Computer == Computer && r.Capacity >= Capacity);
+            if (GoodRooms.Count() == 0)
+                return null;
+            IEnumerable<Room> PerfectRooms = GoodRooms.OrderBy(r => r.Capacity);
+            if (PerfectRooms.Count() == 0)
+                return null;
+            Room perfectRoom = PerfectRooms.First();
+
+            return perfectRoom;
+        }
+
     }
 }
