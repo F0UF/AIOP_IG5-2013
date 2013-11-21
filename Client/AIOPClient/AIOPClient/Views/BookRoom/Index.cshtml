@@ -52,7 +52,7 @@
             <select class="form-control">
                 @foreach (dynamic subject in ViewBag.SubjectList)
                 {
-                <option>@subject.Subject_Name</option>
+                    <option>@subject.Subject_Name</option>
                 }
             </select>
         </div>
@@ -79,23 +79,55 @@
 
     <!-- DATE PICKER -->
 
-    <div class="form-group row">
-        <div class="input-group">
-            <input class="form-control datepicker" type="text" value="12-02-2012" readonly="">
-            <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+
+    <div class="row">
+        <div class="col-xs-3">
+            <label for="datepicker">
+                Date
+        <input type="text" id="datepicker" class="form-control" placeholder="Select Date" readonly="" />
+               @* <span class="input-group-addon" id="btn" style="cursor: pointer;">
+                    <span class="glyphicon glyphicon-calendar"></span>
+                </span>*@
+            </label>
         </div>
 
-       @* <div class="input-group">
-        <input id="timepicker" type="text" class="timepicker">
-        <span class="input-group-addon"><i class="glyphicon glyphicon-time"></i></span>
-        </div>*@
+         <div class="col-xs-3">
+            <label for="timepickerStart">
+                Starts At
+        <input type="text" id="timepickerStart" class="form-control" placeholder="Select Time" readonly="" />
+              
+            </label>
+        </div>
+
+         <div class="col-xs-3">
+            <label for="timepickerEnd">
+                Ends At
+        <input type="text" id="timepickerEnd" class="form-control" placeholder="Select Time" readonly="" />
+              
+            </label>
+        </div>
+
     </div>
+
+
 
     <button type="submit" class="btn btn-default">Submit</button>
 </form>
 
-<script>$(".datepicker").datepicker({ autoclose: true, todayHighlight: true });</script>
+<script>
+
+    $('#btn').click(function () {
+        $(document).ready(function () {
+            $("#datepicker").datepicker().focus();
+        });
+    });
+
+    $('#timepickerStart').timepicker();
+    $('#timepickerEnd').timepicker();
+
+</script>
+
 <script type="text/javascript">
-    $('#timepicker').timepicker();
+    
 </script>
 
