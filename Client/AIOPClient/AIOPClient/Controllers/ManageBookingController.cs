@@ -7,6 +7,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using AIOPClient.Models;
+using System.Text;
 
 namespace AIOPClient.Controllers
 {
@@ -41,6 +42,7 @@ namespace AIOPClient.Controllers
             //Deserialization of the returned json
             using (var client = new WebClient())
             {
+                client.Encoding = Encoding.UTF8;
                 var result = client.DownloadString(urlApi);
                 JArray jsonVal = JArray.Parse(result) as JArray;
                 dynamic waitings = jsonVal;

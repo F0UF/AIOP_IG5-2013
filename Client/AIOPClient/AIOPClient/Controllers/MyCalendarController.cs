@@ -6,6 +6,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using AIOPClient.Models;
+using System.Text;
 
 namespace AIOPClient.Controllers
 {
@@ -32,6 +33,7 @@ namespace AIOPClient.Controllers
 
             using (var client = new WebClient())
             {
+                client.Encoding = Encoding.UTF8;
                 var result = client.DownloadString("http://162.38.113.204/api/planning/display?group_name=IG4");
                 JArray jsonArray = JArray.Parse(result) as JArray;
 

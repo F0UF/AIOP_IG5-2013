@@ -50,8 +50,10 @@
         </div>
         <div class="col-md-2">
             <select class="form-control">
-                <option>AIOP</option>
-                <option>Communication</option>
+                @foreach (dynamic subject in ViewBag.SubjectList)
+                {
+                <option>@subject.Subject_Name</option>
+                }
             </select>
         </div>
         <div class="col-md-2">
