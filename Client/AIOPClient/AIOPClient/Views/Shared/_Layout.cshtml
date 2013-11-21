@@ -68,7 +68,7 @@
                     @*If user is superUser then we display the ManageBooking menu*@
                     @if (session.admin)
                     {
-                        <li class="@(HttpContext.Current.Request.RequestContext.RouteData.Values["controller"].ToString() == "ManageBooking" ? "active" : "")"><a href="../ManageBooking/Index"><span class="glyphicon glyphicon-book"></span>Manage Booking</a></li>
+                        <li class="@(HttpContext.Current.Request.RequestContext.RouteData.Values["controller"].ToString() == "ManageBooking" ? "active" : "")"><a href="../ManageBooking/Index"><span class="glyphicon glyphicon-book"></span> Manage Booking</a></li>
                     }
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
