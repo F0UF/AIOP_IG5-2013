@@ -66,8 +66,9 @@ namespace AIOPClient.Controllers
                 UserSession session = null;
                 session = UserSession.GetInstance();
 
-                session.userName = jo.name;
-                // session.id_user = jo.id_user;
+                session.userName = jo.First_Name + " " + jo.Last_Name;
+                session.admin = jo.Super_User;
+                session.id_user = jo.Id_User;
 
                 errorMsg = jo.Message;
 
