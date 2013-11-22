@@ -1,21 +1,78 @@
 ﻿@{
     ViewBag.Title = "Global Calendar";
 }
-<div id="calendar">
-    <script>
-        $(document).ready(function () {
-            $('#calendar').fullCalendar({
-                theme: true,
-                header: {
-                    left: '',
-                    center: '',
-                    right: ''
-                },
-                defaultView: 'agendaDay',
-                editable: false,
-                events: "/Calendar/GetEvents/"
-            });
-        });
 
-    </script>
+<!--
+    Afficher formulaire
+    Promotion
+    Année
+    Groupe
+
+    Si renseigné, afficher calendrier en fonction du formulaire.
+    Sinon, afficher que le formulaire
+-->
+
+<div class="btn-group">
+    <button type="button" class="btn btn-default">IG</button>
+    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+        <span class="caret"></span>
+        <span class="sr-only">Toggle Dropdown</span>
+    </button>
+    <ul class="dropdown-menu" role="menu">
+        <li class="">
+            <a href="#">3rd year</a>
+            <ul class="">
+                <li><a href="#">G1</a></li>
+                <li><a href="#">G2</a></li>
+                <li><a href="#">Anglais G1</a></li>
+                <li><a href="#">Anglais G2</a></li>
+            </ul>
+        </li>
+        <li class="divider"></li>
+        <li class="">
+            <a href="#">4th year</a>
+            <ul class="">
+                <li><a href="#">G1</a></li>
+                <li><a href="#">G2</a></li>
+                <li><a href="#">Anglais G1</a></li>
+                <li><a href="#">Anglais G2</a></li>
+            </ul>
+        </li>
+        <li class="divider"></li>
+        <li class="">
+            <a href="#">5th year</a>
+            <ul class="">
+                <li><a href="#">G1</a></li>
+                <li><a href="#">G2</a></li>
+                <li><a href="#">Anglais G1</a></li>
+                <li><a href="#">Anglais G2</a></li>
+            </ul>
+        </li>
+    </ul>
 </div>
+
+
+
+<!--
+        <div class="col-md-9" id="calendar">
+            <script>
+                $(document).ready(function () {
+                    $('#calendar').fullCalendar({
+                        theme: true,
+                        header: {
+                            left: '',
+                            center: '',
+                            right: ''
+                        },
+                        defaultView: 'agendaDay',
+                        editable: false,
+                        events: "/Calendar/GetEvents/"
+                    });
+                });
+
+            </script>
+        </div>
+    </div>
+>>>>>>> fouf
+</div>
+-->
