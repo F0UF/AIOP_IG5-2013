@@ -14,6 +14,7 @@ using System.Web.Script.Serialization;
 using Newtonsoft.Json.Linq;
 using System.Diagnostics;
 using Newtonsoft.Json.Linq;
+using System.Collections.Specialized;
 
 
 namespace AIOPClient.Controllers
@@ -51,9 +52,33 @@ namespace AIOPClient.Controllers
         // GET: /BookClass/
 
         [HttpPost]
-        public ActionResult Index(String promo, String year, String group, String subject, String type, String projector, String computers, String date, String start, String end)
+        public ActionResult Index(String promo, String year, String group, String subject, String type, Boolean projector, Boolean computers, DateTime date, DateTime start, DateTime end)
         {
-         return View();   
+            JObject json = new JObject();
+            using (var wb = new WebClient())
+            {
+                UserSession session = null;
+                session = UserSession.GetInstance();
+
+                string realName = promo + year + " " + group;
+
+                var data = new NameValueCollection();
+                data["Id_Teacher"] = session.id_user.ToString();
+                data["Capacity"] = "40";
+                data["Group_Name"] = realName;
+                data["Subject_Name"] = subject;
+                data["Type"] = type;
+                data["Projector"] = projector.ToString();
+                data["Computer"] = computers.ToString();
+                data["Date"] = date.ToString();
+                data["Start_At"] = start.ToString();
+                data["End_At"] = end.ToString();
+
+                String urlApi = "http://aiopninjaserver.no-ip.biz/api/planning/CreateBooking?json=";
+
+                var response = wb.UploadValues(urlApi, "POST", data);
+            }
+            return View();   
         }
 
         [HttpPost]
