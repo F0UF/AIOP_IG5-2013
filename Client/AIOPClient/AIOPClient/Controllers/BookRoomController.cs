@@ -47,6 +47,15 @@ namespace AIOPClient.Controllers
             }
         }
 
+        //
+        // GET: /BookClass/
+
+        [HttpPost]
+        public ActionResult Index(String promo, String year, String group, String subject, String type, String projector, String computers, String date, String start, String end)
+        {
+         return View();   
+        }
+
         [HttpPost]
         public ActionResult SubmitBooking (int id)
         {

@@ -63,10 +63,10 @@ namespace AIOPServer.API
 
             JObject jo = new JObject();
 
-            jo.Add("Total Hours To Do", totalHoursToDo);
-            jo.Add("Hours Plan", hoursPlan);
-            jo.Add("Hours Done", hoursDone);
-            jo.Add("Hours Left To Plan", hoursLeftToPlan);
+            jo.Add("ToDo", totalHoursToDo);
+            jo.Add("HoursPlan", hoursPlan);
+            jo.Add("HoursDone", hoursDone);
+            jo.Add("HoursLeft", hoursLeftToPlan);
 
             return jo;
         }
