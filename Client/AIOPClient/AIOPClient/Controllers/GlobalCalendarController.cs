@@ -4,6 +4,9 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using AIOPClient.Models;
+using System.Net;
+using Newtonsoft.Json.Linq;
+using System.Text;
 
 namespace AIOPClient.Controllers
 {
@@ -24,5 +27,39 @@ namespace AIOPClient.Controllers
                 return View();
         }
 
+
+        [ActionName("GetEventsByGN")]
+        public ActionResult GetEventsByGN(String group_name)
+        {
+
+            using (var client = new WebClient())
+            {
+                client.Encoding = Encoding.UTF8;
+                var result = client.DownloadString("http://162.38.113.204/api/planning/display?group_name=" + group_name);
+                JArray jsonArray = JArray.Parse(result) as JArray;
+
+                var eventList = new List<object>();
+
+                foreach (dynamic reservation in jsonArray)
+                {
+                    String title = reservation.Teaching.Course.Subject.Subject_Name;
+                    String start = reservation.Start_Date;
+                    DateTime dateStart = DateTime.ParseExact(start, "MM/dd/yyyy HH:mm:ss", null);
+                    String startString = dateStart.ToString("yyyy-MM-dd HH:mm:ss");
+
+                    String end = reservation.End_Date;
+                    DateTime dateEnd = DateTime.ParseExact(end, "MM/dd/yyyy HH:mm:ss", null);
+                    String endString = dateEnd.ToString("yyyy-MM-dd HH:mm:ss");
+
+                    eventList.Add(new { title = title, start = startString, end = endString, editable = false });
+                }
+
+
+                return Json(eventList.ToArray(), JsonRequestBehavior.AllowGet);
+            }
+        }
+
+
+       
     }
 }
