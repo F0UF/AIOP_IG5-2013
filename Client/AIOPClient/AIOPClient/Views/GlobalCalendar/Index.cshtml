@@ -13,66 +13,244 @@
 -->
 
 <div class="btn-group">
-    <button type="button" class="btn btn-default">IG</button>
-    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+
+    <div class="btn-group">
+        <button type="button" class="btn btn-default dropdown-toggle" id="btnDpt" data-toggle="dropdown">
+            All departments
         <span class="caret"></span>
-        <span class="sr-only">Toggle Dropdown</span>
-    </button>
-    <ul class="dropdown-menu" role="menu">
-        <li class="">
-            <a href="#">3rd year</a>
-            <ul class="">
-                <li><a href="#">G1</a></li>
-                <li><a href="#">G2</a></li>
-                <li><a href="#">Anglais G1</a></li>
-                <li><a href="#">Anglais G2</a></li>
-            </ul>
-        </li>
-        <li class="divider"></li>
-        <li class="">
-            <a href="#">4th year</a>
-            <ul class="">
-                <li><a href="#">G1</a></li>
-                <li><a href="#">G2</a></li>
-                <li><a href="#">Anglais G1</a></li>
-                <li><a href="#">Anglais G2</a></li>
-            </ul>
-        </li>
-        <li class="divider"></li>
-        <li class="">
-            <a href="#">5th year</a>
-            <ul class="">
-                <li><a href="#">G1</a></li>
-                <li><a href="#">G2</a></li>
-                <li><a href="#">Anglais G1</a></li>
-                <li><a href="#">Anglais G2</a></li>
-            </ul>
-        </li>
-    </ul>
-</div>
-
-
-
-<!--
-        <div class="col-md-9" id="calendar">
-            <script>
-                $(document).ready(function () {
-                    $('#calendar').fullCalendar({
-                        theme: true,
-                        header: {
-                            left: '',
-                            center: '',
-                            right: ''
-                        },
-                        defaultView: 'agendaDay',
-                        editable: false,
-                        events: "/Calendar/GetEvents/"
-                    });
-                });
-
-            </script>
-        </div>
+        </button>
+        <ul class="dropdown-menu" id="dropdownDpt" role="menu">
+            <li class="">
+                <a href="#">All departments</a>
+            </li>
+            <li class="divider"></li>
+            <li class="">
+                <a href="#">IG</a>
+            </li>
+            <li class="">
+                <a href="#">STIA</a>
+            </li>
+            <li class="">
+                <a href="#">STE</a>
+            </li>
+            <li class="">
+                <a href="#">MAT</a>
+            </li>
+            <li class="">
+                <a href="#">ERII</a>
+            </li>
+            <li class="">
+                <a href="#">MI</a>
+            </li>
+            <li class="">
+                <a href="#">EnR</a>
+            </li>
+        </ul>
     </div>
->>>>>>> fouf
+
+    <div class="btn-group">
+        <button type="button" class="btn btn-default dropdown-toggle" id="btnYear" data-toggle="dropdown" disabled>
+            All years
+        <span class="caret"></span>
+        </button>
+        <ul class="dropdown-menu" id="dropdownYear" role="menu">
+            <li class="">
+                <a href="#">All years</a>
+            </li>
+            <li class="divider"></li>
+            <li class="">
+                <a href="#">3rd year</a>
+            </li>
+            <li class="">
+                <a href="#">4th year</a>
+            </li>
+            <li class="">
+                <a href="#">5th year</a>
+            </li>
+        </ul>
+    </div>
+
+    <div class="btn-group">
+        <button type="button" class="btn btn-default dropdown-toggle" id="btnGroup" data-toggle="dropdown" disabled>
+            All groups
+        <span class="caret"></span>
+        </button>
+        <ul class="dropdown-menu" id="dropdownGroup" role="menu">
+            <li class="">
+                <a href="#">All groups</a>
+            </li>
+            <li class="divider"></li>
+            <li class="">
+                <a href="#">Group 1</a>
+            </li>
+            <li class="">
+                <a href="#">Group 2</a>
+            </li>
+            <li class="divider"></li>
+            <li class="">
+                <a href="#">English Group 1</a>
+            </li>
+            <li class="">
+                <a href="#">English Group 2</a>
+            </li>
+            <li class="">
+                <a href="#">English Group 3</a>
+            </li>
+        </ul>
+    </div>
+
 </div>
--->
+
+
+<div id="calendar" style='font-size: 13px'></div>
+
+
+<script>
+
+    $(function () {
+
+        $("#dropdownDpt li a").click(function () {
+
+            $("#btnDpt:first-child").text($(this).text());
+
+            if ($(this).text() != "All departments") {
+                document.getElementById('btnYear').disabled = false;
+                $("#btnDpt:first-child").val($(this).text());
+            }
+            else {
+                document.getElementById('btnYear').disabled = true;
+                document.getElementById('btnGroup').disabled = true;
+                $("#btnDpt:first-child").val("");
+            }
+
+        });
+
+    });
+
+    $(function () {
+
+        $("#dropdownYear li a").click(function () {
+
+            $("#btnYear:first-child").text($(this).text());
+            if ($(this).text() != "All years") {
+                document.getElementById('btnGroup').disabled = false;
+                $("#btnYear:first-child").val($(this).text().substr(0, 1));
+            }
+            else {
+                document.getElementById('btnGroup').disabled = true;
+                $("#btnYear:first-child").val("");
+            }
+
+        });
+
+    });
+
+    $(function () {
+
+        $("#dropdownGroup li a").click(function () {
+
+            $("#btnGroup:first-child").text($(this).text());
+            if ($(this).text() != "All groups") {
+                if ($(this).text() == "Group 1")
+                    $("#btnGroup:first-child").val("G1");
+                if ($(this).text() == "Group 2")
+                    $("#btnGroup:first-child").val("G2");
+                if ($(this).text() == "English Group 1")
+                    $("#btnGroup:first-child").val("anglais G1");
+                if ($(this).text() == "English Group 2")
+                    $("#btnGroup:first-child").val("anglais G2");
+                if ($(this).text() == "English Group 3")
+                    $("#btnGroup:first-child").val("anglais G3");
+            }
+            else {
+                $("#btnGroup:first-child").val("");
+            }
+
+        });
+
+    });
+
+    function getDptValue() {
+
+        var groupDpt = document.getElementById('btnDpt').value;
+        return groupDpt;
+    }
+
+    function getYearValue() {
+        var groupYear = document.getElementById('btnYear').value;
+        return groupYear;
+    }
+
+    function getGroupValue() {
+
+        var groupGroup = document.getElementById('btnGroup').value;
+        return groupGroup;
+    }
+
+    $(function () {
+
+        $(".dropdown-menu li a").click(function () {
+
+            //if group button is disabled
+            if (document.getElementById('btnGroup').disabled == true) {
+                //if year button is disabled
+                if (document.getElementById('btnYear').disabled == true)
+                    group = getDptValue();
+                else
+                    group = getDptValue() + getYearValue();
+            }
+            else
+                group = getDptValue() + getYearValue() + " " + getGroupValue();
+            
+
+            $('#calendar').fullCalendar('removeEventSource', source);
+
+            source = function (start, end, callback) {
+                debugger;
+                $.getJSON("GetEventsByGN?group_name=" + group, function (locationsArray) {
+                    var result = $(locationsArray).map(function () {
+                        return {
+                            title: this.title,
+                            start: this.start,
+                            end: this.end,
+                            allDay: this.editable
+                        };
+                    }).toArray();
+                    callback(result);
+                });
+            };
+
+            $('#calendar').fullCalendar('addEventSource', source);
+
+        });
+
+    });
+</script>
+
+<script>
+    $(document).ready(function () {
+
+        source = {
+        };
+
+        $('#calendar').fullCalendar({
+            height: 660,
+            theme: true,
+            allDaySlot: false,
+            timeFormat: 'HH:mm{ - HH:mm}',
+            firstHour: 8,
+            firstDay: 1,
+            hiddenDays: [0],
+            minTime: 8,
+            maxTime: 20,
+            header: {
+                left: 'prev,next today',
+                center: 'title',
+                right: 'month,agendaWeek,agendaDay'
+            },
+            defaultView: 'agendaWeek',
+            editable: false,
+            events: source
+        });
+    });
+</script>
