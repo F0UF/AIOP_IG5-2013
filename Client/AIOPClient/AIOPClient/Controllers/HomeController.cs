@@ -34,13 +34,13 @@ namespace AIOPClient.Controllers
         {
             if (ModelState.IsValid && IsLoginOK(model))
             {
-                return RedirectToAction("Index", "MyCalendar");
+                //return RedirectToAction("Index", "MyCalendar");
+                return Redirect("../MyCalendar/Index");
             }
             else
             {
                 ModelState.AddModelError("", "");
                 return View();
-                //return Content("<script> window.alert(\'" + errorMsg + "\')</script>;<script language=\"JavaScript\">window.location.href='../Home/Index'</script>;");
             }
         }
 

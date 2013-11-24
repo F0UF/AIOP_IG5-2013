@@ -26,7 +26,8 @@
             defaultView: 'agendaWeek',
             editable: false,
             events: function (start, end, callback) {
-                $.getJSON("@Url.Action("GetEvents")", function (locationsArray) {
+                var id_teacher = @AIOPClient.Models.UserSession.GetInstance().id_user
+                $.getJSON("GetEvents?id_teacher=" + id_teacher, function (locationsArray) {
                     var result = $(locationsArray).map(function () {
                         return {
                             title: this.title,

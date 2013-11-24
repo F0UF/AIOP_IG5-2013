@@ -28,13 +28,13 @@ namespace AIOPClient.Controllers
         }
 
         [ActionName("GetEvents")]
-        public ActionResult GetEvents()
+        public ActionResult GetEvents(int id_teacher)
         {           
 
             using (var client = new WebClient())
             {
                 client.Encoding = Encoding.UTF8;
-                var result = client.DownloadString("http://162.38.113.204/api/planning/display?group_name=IG4");
+                var result = client.DownloadString("http://162.38.113.204/api/planning/display?id_teacher="+id_teacher);
                 JArray jsonArray = JArray.Parse(result) as JArray;
 
                 var eventList = new List<object>();
