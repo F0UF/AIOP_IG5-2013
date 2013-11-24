@@ -37,8 +37,10 @@ namespace AIOPClient.Controllers
             //Api's url building
             AIOPClient.Models.UserSession session = null;
             session = AIOPClient.Models.UserSession.GetInstance();
+
             String urlApi = "http://aiopninjaserver.no-ip.biz/api/teacher/summaryHours?id_teacher=";
             //String urlApi = "http://localhost:55080/api/teacher/summaryHours?id_teacher=";
+
             String idUser = session.id_user.ToString();
             urlApi += idUser;
             Console.Write(urlApi);
