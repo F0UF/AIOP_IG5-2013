@@ -54,5 +54,23 @@ namespace AIOPClient.Controllers
                 return true;
             }
         }
+
+        [HttpPost]
+        public ActionResult deleteReservation(int id)
+        {
+            Debug.WriteLine("Ninja !");
+            Debug.WriteLine(id);
+            //Api's url building
+            String urlApi = "http://aiopninjaserver.no-ip.biz/api/planning/Delete?id_booking=" + id.ToString();
+
+            using (var client = new WebClient())
+            {
+                var result = client.DownloadString(urlApi);
+                //If return is null then the reservations wasn't refused properly
+                if (result == null)
+                    return View();
+            }
+            return RedirectToAction("Index", "BookingStatus");
+        }
     }
 }

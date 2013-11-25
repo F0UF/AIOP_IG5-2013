@@ -7,7 +7,7 @@
         <div class="panel-heading">Booking Status</div>
 
         <!-- Table -->
-        <table class="table">
+        <table id="myTable" class="table">
             <tr>
                 <th>Start Date</th>
                 <th>End Date</th>
@@ -44,7 +44,19 @@
                 <td>@reservation.Room.Building.Building_Name</td>
                 <td>@reservation.Room.Room_Number</td>
                 <td>@reservation.State</td>
-                <td>delete</td>
+                <td><button type="button" id="btnRefuse-@reservation.Id_Booking" class="btn btn-danger btn-xs">Delete</button>
+                    <script>
+                        $(function () {
+                            $("#btnRefuse-@reservation.Id_Booking").click(function (e) {
+                                e.preventDefault();
+                                var idBook = @reservation.Id_Booking
+                                $.post("@Url.Action("deleteReservation","BookingStatus")",
+                                    { id: idBook }, function (data) {
+                                        document.getElementById("myTable").deleteRow(@reservation.Id_Booking);
+                                    });
+                            });
+                        });
+                    </script></td>
             </tr>
             }
         </table>
