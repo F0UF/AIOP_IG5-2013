@@ -50,7 +50,11 @@ namespace AIOPClient.Controllers
                     DateTime dateEnd = DateTime.ParseExact(end, "MM/dd/yyyy HH:mm:ss", null);
                     String endString = dateEnd.ToString("yyyy-MM-dd HH:mm:ss");
 
-                    eventList.Add(new { title = title, start = startString, end = endString, editable = false });
+                    String teacher = reservation.Teaching.Teacher.First_Name + " " + reservation.Teaching.Teacher.Last_Name;
+                    String salle = reservation.Room.Room_Number;
+                    String group = reservation.Teaching.Group.Group_Name;
+
+                    eventList.Add(new { title = title, start = startString, end = endString, allday = false, teacher = teacher, salle = salle, group = group });
                 }
 
                 

@@ -12,15 +12,16 @@
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
 
     <!-- Bootstrap -->
-    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap.min.css">
+    @*<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap.min.css">*@
+    <link rel="stylesheet" href="~/Content/themes/base/bootstrapOriginal.min.css">
     <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap-theme.min.css">
     <script src="//netdna.bootstrapcdn.com/bootstrap/3.0.2/js/bootstrap.min.js"></script>
 
     <!-- Datepicker -->
     <link href="~/Content/themes/base/datepicker.css" rel="stylesheet">
     <script src="~/Scripts/bootstrap-formhelpers-datepicker.js" type="text/javascript"></script>
-    
-      <!-- Timepicker -->
+
+    <!-- Timepicker -->
     <script src="~/Scripts/jquery.ui.timepicker.js" type="text/javascript"></script>
     <link rel="stylesheet" href="~/Content/jquery.ui.timepicker.css">
 
@@ -61,21 +62,22 @@
             <div class="collapse navbar-collapse" id="navbarDarCalendar">
                 <ul class="nav navbar-nav">
                     <!--To allow active links display we make a comparaison between the supposed controller's name and the real one-->
-                    <li class="@(HttpContext.Current.Request.RequestContext.RouteData.Values["controller"].ToString() == "MyCalendar" ? "active" : "")"><a href="../MyCalendar/Index"><span class="glyphicon glyphicon-home"></span> My Calendar</a></li>
-                    <li class="@(HttpContext.Current.Request.RequestContext.RouteData.Values["controller"].ToString() == "GlobalCalendar" ? "active" : "")"><a href="../GlobalCalendar/Index"><span class="glyphicon glyphicon-calendar"></span> Global Calendar</a></li>
-                    <li class="@(HttpContext.Current.Request.RequestContext.RouteData.Values["controller"].ToString() == "WorkingHours" ? "active" : "")"><a href="../WorkingHours/Index"><span class="glyphicon glyphicon-time"></span> Working Hours</a></li>
-                    <li class="@(HttpContext.Current.Request.RequestContext.RouteData.Values["controller"].ToString() == "BookRoom" ? "active" : "")"><a href="../BookRoom/Index"><span class="glyphicon glyphicon-bookmark"></span> Book Room</a></li>
-                    <li class="@(HttpContext.Current.Request.RequestContext.RouteData.Values["controller"].ToString() == "BookingStatus" ? "active" : "")"><a href="../BookingStatus/Index"><span class="glyphicon glyphicon-dashboard"></span> Booking Status</a></li>
+                    <li class="@(HttpContext.Current.Request.RequestContext.RouteData.Values["controller"].ToString() == "MyCalendar" ? "active" : "")"><a href="../MyCalendar/Index"><span class="glyphicon glyphicon-home"></span>My Calendar</a></li>
+                    <li class="@(HttpContext.Current.Request.RequestContext.RouteData.Values["controller"].ToString() == "GlobalCalendar" ? "active" : "")"><a href="../GlobalCalendar/Index"><span class="glyphicon glyphicon-calendar"></span>Global Calendar</a></li>
+                    <li class="@(HttpContext.Current.Request.RequestContext.RouteData.Values["controller"].ToString() == "WorkingHours" ? "active" : "")"><a href="../WorkingHours/Index"><span class="glyphicon glyphicon-time"></span>Working Hours</a></li>
+                    <li class="@(HttpContext.Current.Request.RequestContext.RouteData.Values["controller"].ToString() == "BookRoom" ? "active" : "")"><a href="../BookRoom/Index"><span class="glyphicon glyphicon-bookmark"></span>Book Room</a></li>
+                    <li class="@(HttpContext.Current.Request.RequestContext.RouteData.Values["controller"].ToString() == "BookingStatus" ? "active" : "")"><a href="../BookingStatus/Index"><span class="glyphicon glyphicon-dashboard"></span>Booking Status</a></li>
                     @*If user is superUser then we display the ManageBooking menu*@
                     @if (session.admin)
                     {
-                        <li class="@(HttpContext.Current.Request.RequestContext.RouteData.Values["controller"].ToString() == "ManageBooking" ? "active" : "")"><a href="../ManageBooking/Index"><span class="glyphicon glyphicon-book"></span> Manage Booking</a></li>
+                        <li class="@(HttpContext.Current.Request.RequestContext.RouteData.Values["controller"].ToString() == "ManageBooking" ? "active" : "")"><a href="../ManageBooking/Index"><span class="glyphicon glyphicon-book"></span>Manage Booking</a></li>
                     }
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
-                    <li><a href="../MyCalendar/Index">@session.userName</a></li>
-                    <li><a href="../Home/LogOut" id="popoverOption" rel="popover" data-placement="bottom" data-original-title="Do you really want to log out ?" data-trigger="hover"><span class=" glyphicon glyphicon-off"></span></a></li>
+                    <li><a href="../MyCalendar/Index"  id="popoverOption">@session.userName</a></li>
+                    <li><a href="../Home/LogOut"><span class=" glyphicon glyphicon-off"></span></a></li>
                 </ul>
+                @*<div id="popoverData">Do you really want to log out ?</div>*@
             </div>
         </nav>
     }
@@ -97,7 +99,7 @@
                         @Html.AntiForgeryToken()
                         @if (!ViewData.ModelState.IsValid)
                         {
-                            <div class="form-group" style="padding-top:8px; padding-right:10px;">
+                            <div class="form-group" style="padding-top: 8px; padding-right: 10px;">
                                 @Html.ValidationSummary(true, "Login was unsuccessful.")
                             </div>
                         }
@@ -128,12 +130,24 @@
             @RenderSection("scripts", required: false)
         </div>
     </div>
-    <script>$(function () { $('#datepicker').datepicker(); });</script>
-    <script>
-        $('#popoverData').popover();
-        $('#popoverOption').popover({ trigger: "hover" });
-    </script>
+    <script>$(function () { $('#datepicker').datepicker(); });
 
+    </script>
+@*    <script>
+        $('#popoverOption').popover({
+            position: absolute,
+            trigger: "hover",
+            html: 'true',
+            content: '<div id="popOverBox">Do you really want to log out ?</div>'
+
+        });
+    </script>*@
+
+    
+    <script>
+       
+        
+    </script>
     <footer>
         <p class="text-center">&copy; AIOP 2013</p>
     </footer>
