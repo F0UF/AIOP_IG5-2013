@@ -20,44 +20,51 @@
                 <th>Status</th>
                 <th>Action</th>
             </tr>
-            @foreach (dynamic reservation in ViewBag.reservationsList)
-            {
-            <tr>
-                <td>@reservation.Start_Date</td>
-                <td>@reservation.End_Date</td>
-                <td>@reservation.Teaching.Course.Subject.Subject_Name</td>
-                <td>@reservation.Teaching.Group.Group_Name</td>
-                @if (reservation.Room.Projector=="true"){
-                <td>Yes</td>
-                }
-                else
+            @{
+                int idRow=1;
+                foreach (dynamic reservation in ViewBag.reservationsList)
                 {
-                <td>No</td>
-                }
-                @if (reservation.Room.Computer=="true"){
-                <td>Yes</td>
-                }
-                else
-                {
-                <td>No</td>
-                }
-                <td>@reservation.Room.Building.Building_Name</td>
-                <td>@reservation.Room.Room_Number</td>
-                <td>@reservation.State</td>
-                <td><button type="button" id="btnRefuse-@reservation.Id_Booking" class="btn btn-danger btn-xs">Delete</button>
-                    <script>
-                        $(function () {
-                            $("#btnRefuse-@reservation.Id_Booking").click(function (e) {
-                                e.preventDefault();
-                                var idBook = @reservation.Id_Booking
-                                $.post("@Url.Action("deleteReservation","BookingStatus")",
-                                    { id: idBook }, function (data) {
-                                        document.getElementById("myTable").deleteRow(@reservation.Id_Booking);
+                <tr>
+                    <td>@reservation.Start_Date</td>
+                    <td>@reservation.End_Date</td>
+                    <td>@reservation.Teaching.Course.Subject.Subject_Name</td>
+                    <td>@reservation.Teaching.Group.Group_Name</td>
+                    @if (reservation.Room.Projector=="true"){
+                    <td>Yes</td>
+                    }
+                    else
+                    {
+                    <td>No</td>
+                    }
+                    @if (reservation.Room.Computer=="true"){
+                    <td>Yes</td>
+                    }
+                    else
+                    {
+                    <td>No</td>
+                    }
+                    <td>@reservation.Room.Building.Building_Name</td>
+                    <td>@reservation.Room.Room_Number</td>
+                    <td>@reservation.State</td>
+                    <td><button type="button" id="btnRefuse-@reservation.Id_Booking" class="btn btn-danger btn-xs">Delete</button>
+                        <script>
+                            $(function () {
+                                $("#btnRefuse-@reservation.Id_Booking").click(function (e) {
+                                        e.preventDefault();
+                                        var idBook = @reservation.Id_Booking
+                                        $.post("@Url.Action("deleteReservation","BookingStatus")",
+                                            { id: idBook }, function (data) {
+                                                //if the action was successfull
+                                                if (data == 0) {
+                                                    document.getElementById("myTable").deleteRow(@idRow);
+                                                }
+                                            });
                                     });
-                            });
-                        });
-                    </script></td>
-            </tr>
+                                });
+                            </script></td>
+                </tr>
+                idRow++;
+                }
             }
         </table>
     </div>

@@ -61,11 +61,10 @@ namespace AIOPClient.Controllers
             using (var client = new WebClient())
             {
                 var result = client.DownloadString(urlApi);
-                //If return is null then the reservations wasn't refused properly
                 if (result == null)
-                    return View();
+                    return Content("-1");
             }
-            return RedirectToAction("Index", "ManageBooking");
+            return Content("0");
         }
 
         [HttpPost]
@@ -78,11 +77,10 @@ namespace AIOPClient.Controllers
             using (var client = new WebClient())
             {
                 var result = client.DownloadString(urlApi);
-                //If return is null then the reservations wasn't accepted properly
                 if (result == null)
-                    return View();
+                    return Content("-1");
             }
-            return View();
+            return Content("0");
         }
     }
 }

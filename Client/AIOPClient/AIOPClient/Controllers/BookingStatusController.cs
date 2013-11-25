@@ -68,9 +68,9 @@ namespace AIOPClient.Controllers
                 var result = client.DownloadString(urlApi);
                 //If return is null then the reservations wasn't refused properly
                 if (result == null)
-                    return View();
+                    return Content("-1");
             }
-            return RedirectToAction("Index", "BookingStatus");
+            return Content("0");
         }
     }
 }
