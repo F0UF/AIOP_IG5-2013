@@ -54,41 +54,88 @@ namespace AIOPClient.Controllers
         [HttpPost]
         public ActionResult Index(String promo, String year, String group, String subject, String type, String projector, String computers, String capacity, String date, String start, String end)
         {
-            using (var wb = new WebClient())
+            //using (var wb = new WebClient())
+            //{
+            //    UserSession session = null;
+            //    session = UserSession.GetInstance();
+
+            //    string realName = promo + year + " " + group;
+
+            //    JObject json = new JObject();
+            //    json.Add("Id_Teacher", session.id_user);
+            //    json.Add("Capacity", "40");
+            //    json.Add("Group_Name", realName);
+            //    json.Add("Subject_Name", subject);
+            //    json.Add("Type", type);
+            //    if (projector == null)
+            //        json.Add("Projector",false);
+            //    else
+            //        json.Add("Projector", true);
+            //    if (computers == null)
+            //        json.Add("Computer", false);
+            //    else
+            //        json.Add("Computer", true);
+            //    json.Add("Date", date);
+            //    json.Add("Start_At", start);
+            //    json.Add("End_At", end);
+
+            //    String urlApi = "http://aiopninjaserver.no-ip.biz/api/planning/CreateBooking";
+            //    Debug.Write(json.ToString());
+
+            //    var response = wb.UploadString(urlApi, "POST",json.ToString());
+               
+            //    if(response == null)
+            //        Debug.Write("" + date + " " + start + " " + end);
+            //    Debug.Write("la tete a bobby");
+            //}
+
+            using (var client = new WebClient())
             {
                 UserSession session = null;
                 session = UserSession.GetInstance();
-
+                client.Encoding = Encoding.UTF8;
                 string realName = promo + year + " " + group;
 
-                JObject json = new JObject();
-                json.Add("Id_Teacher", session.id_user);
-                json.Add("Capacity", "40");
-                json.Add("Group_Name", realName);
-                json.Add("Subject_Name", subject);
-                json.Add("Type", type);
+                string boolproj;
+                string boolcomp;
+                int cap;
+
                 if (projector == null)
-                    json.Add("Projector",false);
-                else
-                    json.Add("Projector", true);
+                {
+                    boolproj = "false";
+                }
+                else boolproj = "true";
+
                 if (computers == null)
-                    json.Add("Computer", false);
+                {
+                    boolcomp = "false";
+                }
+                else boolcomp = "true";
+
+                if (capacity == "Small(-30)")
+                    cap = 30;
+                else if (capacity == "Medium (between 30 and 50)")
+                    cap = 50;
+                else if (capacity == "Large (between 50 and 70)")
+                    cap = 70;
+                else cap = 100;
+
+                string start_time = date + " " + start;
+                string end_time = date + " " + end;
+
+                string test = "http://aiopninjaserver.no-ip.biz/api/planning/CreateBooking?Id_Teacher=" + session.id_user + "&Group_Name=" + realName + "&Subject_Name=" + subject + "&Type=" + type + "&Projector=" + boolproj + "&Computer=" + boolcomp + "&Capacity=" + cap + "&End_Time=" + end_time + "&Start_Time=" + start_time;
+                var result = client.DownloadString(test);
+
+                if (result.Equals("null"))
+                {
+                    return Content("<script> alert(\'No room available\');location.href='./';</script>" );
+                }
                 else
-                    json.Add("Computer", true);
-                json.Add("Date", date);
-                json.Add("Start_At", start);
-                json.Add("End_At", end);
-
-                String urlApi = "http://aiopninjaserver.no-ip.biz/api/planning/CreateBooking";
-                Debug.Write(json.ToString());
-
-                var response = wb.UploadString(urlApi, "POST",json.ToString());
-               
-                if(response == null)
-                    Debug.Write("" + date + " " + start + " " + end);
-                Debug.Write("la tete a bobby");
+                {
+                    return Content("<script> alert(\'Room booked\');location.href='./';</script>");
+                }
             }
-            return RedirectToAction("Index","BookRoom");   
+            //return RedirectToAction("Index","BookRoom");   
         }
 
         /*[HttpPost]
