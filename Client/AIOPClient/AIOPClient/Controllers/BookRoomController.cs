@@ -52,9 +52,8 @@ namespace AIOPClient.Controllers
         // GET: /BookClass/
 
         [HttpPost]
-        public ActionResult Index(String promo, String year, String group, String subject, String type, Boolean projector, Boolean computers, DateTime date, DateTime start, DateTime end)
+        public ActionResult Index(String promo, String year, String group, String subject, String type, String projector, String computers, String capacity, String date, String start, String end)
         {
-            JObject json = new JObject();
             using (var wb = new WebClient())
             {
                 UserSession session = null;
@@ -62,27 +61,39 @@ namespace AIOPClient.Controllers
 
                 string realName = promo + year + " " + group;
 
-                var data = new NameValueCollection();
-                data["Id_Teacher"] = session.id_user.ToString();
-                data["Capacity"] = "40";
-                data["Group_Name"] = realName;
-                data["Subject_Name"] = subject;
-                data["Type"] = type;
-                data["Projector"] = projector.ToString();
-                data["Computer"] = computers.ToString();
-                data["Date"] = date.ToString();
-                data["Start_At"] = start.ToString();
-                data["End_At"] = end.ToString();
+                JObject json = new JObject();
+                json.Add("Id_Teacher", session.id_user);
+                json.Add("Capacity", "40");
+                json.Add("Group_Name", realName);
+                json.Add("Subject_Name", subject);
+                json.Add("Type", type);
+                if (projector == null)
+                    json.Add("Projector",false);
+                else
+                    json.Add("Projector", true);
+                if (computers == null)
+                    json.Add("Computer", false);
+                else
+                    json.Add("Computer", true);
+                json.Add("Date", date);
+                json.Add("Start_At", start);
+                json.Add("End_At", end);
 
-                String urlApi = "http://aiopninjaserver.no-ip.biz/api/planning/CreateBooking?json=";
+                String urlApi = "http://aiopninjaserver.no-ip.biz/api/planning/CreateBooking";
+                Debug.Write(json.ToString());
 
-                var response = wb.UploadValues(urlApi, "POST", data);
+                var response = wb.UploadString(urlApi, "POST",json.ToString());
+               
+                if(response == null)
+                    Debug.Write("" + date + " " + start + " " + end);
+                Debug.Write("la tete a bobby");
             }
-            return View();   
+
+            return RedirectToAction("Index","BookRoom");   
 
         }
 
-        [HttpPost]
+        /*[HttpPost]
         public ActionResult SubmitBooking (int id)
         {
             Debug.WriteLine(id);
@@ -130,9 +141,9 @@ namespace AIOPClient.Controllers
                     session.admin = jo.Super_User;
                     session.id_user = jo.Id_User;
                     return true;
-                }*/
+                }
             }
-        }
+        }*/
 
     }
 }
