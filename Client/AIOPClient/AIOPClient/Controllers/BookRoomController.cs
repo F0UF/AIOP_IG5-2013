@@ -59,6 +59,7 @@ namespace AIOPClient.Controllers
                 UserSession session = null;
                 session = UserSession.GetInstance();
                 client.Encoding = Encoding.UTF8;
+                client.Headers[HttpRequestHeader.ContentType] = "application/json";
                 string realName = promo + year + " " + group;
 
                 string start_time = date + " " + start;
@@ -92,7 +93,7 @@ namespace AIOPClient.Controllers
 
                 String urlApi = "http://localhost:55080/api/planning/CreateBooking";
                 Debug.Write(json.ToString());
-
+                string jsonString = json.ToString();
                 var response = client.UploadString(urlApi, "POST", json.ToString());
 
                 if (response.Equals("null"))

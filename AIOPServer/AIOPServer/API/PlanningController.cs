@@ -61,7 +61,7 @@ namespace AIOPServer.API
         public Booking PostBooking(JObject json)
         {
             dynamic jo = json;
-            int Id_Teacher = int.Parse(jo.Id_Teacher);
+            int Id_Teacher = jo.Id_Teacher;
             int Capacity = jo.Capacity;
             string Group_Name = jo.Group_Name;
             string Subject_Name = jo.Subject_Name;
