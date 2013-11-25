@@ -2,25 +2,41 @@
     ViewBag.Title = "My Calendar";
 }
 <script>
-    $(document).ready(function () {
-        var date = new Date();
-        var d = date.getDate();
-        var m = date.getMonth();
-        var y = date.getFullYear();
 
+    var isMobile = {
+        Android: function () {
+            return navigator.userAgent.match(/Android/i);
+        },
+        BlackBerry: function () {
+            return navigator.userAgent.match(/BlackBerry/i);
+        },
+        iOS: function () {
+            return navigator.userAgent.match(/iPhone|iPad|iPod/i);
+        },
+        Opera: function () {
+            return navigator.userAgent.match(/Opera Mini/i);
+        },
+        Windows: function () {
+            return navigator.userAgent.match(/IEMobile/i);
+        },
+        any: function () {
+            return (isMobile.Android() || isMobile.BlackBerry() || isMobile.iOS() || isMobile.Opera() || isMobile.Windows());
+        }
+    };
+
+    $(document).ready(function () {
         $('#calendar').fullCalendar({
-            height: 660,
             theme: true,
             allDaySlot: false,
             timeFormat: 'HH:mm{ - HH:mm}',
             firstHour: 8,
             firstDay: 1,
-            hiddenDays: [0],
+            hiddenDays: [0,6],
             minTime: 8,
             maxTime: 20,
             header: {
                 left: 'prev,next today',
-                center: 'title',
+                center: '',
                 right: 'month,agendaWeek,agendaDay'
             },
             defaultView: 'agendaWeek',
@@ -33,14 +49,26 @@
                             title: this.title,
                             start: this.start,
                             end: this.end,
-                            allDay: this.editable
+                            allDay: this.allday,
+                            description: '<p>Room : ' + this.salle + '</p>' + '<p>Teacher : ' + this.teacher + '</p>' + '<p>Group : ' + this.group + '</p>'
                         };
                     }).toArray();
                     callback(result);
                 });
+            },
+            eventClick: function (calEvent, jsEvent, view) {
+                $("#cal_event").html(calEvent.description);
+                $("#cal_event").dialog({
+                    title: calEvent.title,
+                    content : calEvent.description
+                }); $("#cal_event").HTML(calEvent.description);
+
             }
         });
     });
 
 </script>
-<div id="calendar" style='font-size: 13px'></div>
+@*<div id="content">*@
+    <div id="calendar" style='font-size: 12px'></div>
+    <div id="cal_event"></div>
+@*</div>*@
