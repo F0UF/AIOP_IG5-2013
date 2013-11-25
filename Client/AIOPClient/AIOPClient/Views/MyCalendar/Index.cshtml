@@ -2,8 +2,7 @@
     ViewBag.Title = "My Calendar";
 }
 <script>
-
-    var isMobile = {
+    isMobile = {
         Android: function () {
             return navigator.userAgent.match(/Android/i);
         },
@@ -50,7 +49,7 @@
                             start: this.start,
                             end: this.end,
                             allDay: this.allday,
-                            description: '<p>Room : ' + this.salle + '</p>' + '<p>Teacher : ' + this.teacher + '</p>' + '<p>Group : ' + this.group + '</p>'
+                            description: '<p>Time Slot : ' + this.time_slot + '</p>' + '<p>Room : ' + this.salle + '</p>' + '<p>Teacher : ' + this.teacher + '</p>' + '<p>Group : ' + this.group + '</p>'
                         };
                     }).toArray();
                     callback(result);
@@ -69,6 +68,16 @@
 
 </script>
 @*<div id="content">*@
-    <div id="calendar" style='font-size: 12px'></div>
+  @*  <div id="calendar"
+        style='font-size: 12px'
+        ></div>*@
     <div id="cal_event"></div>
+
+<script>
+    if (isMobile.any()) {
+        document.writeln(' <div id="calendar" style="font-size: 8px" ></div>');
+    }
+    else
+        document.writeln(' <div id="calendar" style="font-size: 12px" ></div>');
+</script>
 @*</div>*@
