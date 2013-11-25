@@ -11,14 +11,7 @@
     Si renseigné, afficher calendrier en fonction du formulaire.
     Sinon, afficher que le formulaire
 -->
- <div id="cal_event"></div>
-<script>
-    if (isMobile.any()) {
-        document.writeln(' <div id="calendar" style="font-size: 8px" ></div>');
-    }
-    else
-        document.writeln(' <div id="calendar" style="font-size: 12px" ></div>');
-</script>
+
 
 <div class="btn-group">
 
@@ -109,8 +102,6 @@
 
 </div>
 
-
-<div id="calendar" style='font-size: 13px'></div>
 
 
 <script>
@@ -263,18 +254,17 @@
         };
 
         $('#calendar').fullCalendar({
-            height: 660,
             theme: true,
             allDaySlot: false,
             timeFormat: 'HH:mm{ - HH:mm}',
             firstHour: 8,
             firstDay: 1,
-            hiddenDays: [0],
+            hiddenDays: [0, 6],
             minTime: 8,
             maxTime: 20,
             header: {
                 left: 'prev,next today',
-                center: 'title',
+                center: '',
                 right: 'month,agendaWeek,agendaDay'
             },
             defaultView: 'agendaWeek',
@@ -288,6 +278,15 @@
                 }); $("#cal_event").HTML(calEvent.description);
 
             }
-        });
+       });
     });
+</script>
+
+<div id="cal_event"></div>
+<script>
+    if (isMobile.any()) {
+        document.writeln(' <div id="calendar" style="font-size: 8px" ></div>');
+    }
+    else
+        document.writeln(' <div id="calendar" style="font-size: 12px" ></div>');
 </script>
