@@ -3,11 +3,12 @@
 }
 
 <div class="panel panel-default">
-        <!-- Default panel contents -->
-        <div class="panel-heading">Booking Status</div>
+    <!-- Default panel contents -->
+    <div class="panel-heading">Booking Status</div>
 
-        <!-- Table -->
-        <table id="myTable" class="table">
+    <!-- Table -->
+    <div class="table-responsive">
+        <table id="myTable" class="table table-striped">
             <tr>
                 <th>Start Date</th>
                 <th>End Date</th>
@@ -20,36 +21,44 @@
                 <th>Status</th>
                 <th>Action</th>
             </tr>
+
             @{
-                int idRow=1;
+                int idRow = 1;
                 foreach (dynamic reservation in ViewBag.reservationsList)
                 {
-                <tr>
-                    <td>@reservation.Start_Date</td>
-                    <td>@reservation.End_Date</td>
-                    <td>@reservation.Teaching.Course.Subject.Subject_Name</td>
-                    <td>@reservation.Teaching.Group.Group_Name</td>
-                    @if (reservation.Room.Projector=="true"){
-                    <td>Yes</td>
-                    }
-                    else
-                    {
-                    <td>No</td>
-                    }
-                    @if (reservation.Room.Computer=="true"){
-                    <td>Yes</td>
-                    }
-                    else
-                    {
-                    <td>No</td>
-                    }
-                    <td>@reservation.Room.Building.Building_Name</td>
-                    <td>@reservation.Room.Room_Number</td>
-                    <td>@reservation.State</td>
-                    <td><button type="button" id="btnRefuse-@reservation.Id_Booking" class="btn btn-danger btn-xs">Delete</button>
-                        <script>
-                            $(function () {
-                                $("#btnRefuse-@reservation.Id_Booking").click(function (e) {
+
+                    <tr>
+                        <td>@reservation.Start_Date</td>
+                        <td>@reservation.End_Date</td>
+                        <td>@reservation.Teaching.Course.Subject.Subject_Name</td>
+                        <td>@reservation.Teaching.Group.Group_Name</td>
+
+                        @if (reservation.Room.Projector == "true")
+                        {
+                            <td>Yes</td>
+                        }
+                        else
+                        {
+                            <td>No</td>
+                        }
+                        @if (reservation.Room.Computer == "true")
+                        {
+                            <td>Yes</td>
+                        }
+                        else
+                        {
+                            <td>No</td>
+
+                        }
+                        <td>@reservation.Room.Building.Building_Name</td>
+                        <td>@reservation.Room.Room_Number</td>
+                        <td>@reservation.State</td>
+
+                        <td>
+                            <button type="button" id="btnRefuse-@reservation.Id_Booking" class="btn btn-danger btn-xs">Delete</button>
+                            <script>
+                                $(function () {
+                                    $("#btnRefuse-@reservation.Id_Booking").click(function (e) {
                                         e.preventDefault();
                                         var idBook = @reservation.Id_Booking
                                         $.post("@Url.Action("deleteReservation","BookingStatus")",
@@ -61,10 +70,12 @@
                                             });
                                     });
                                 });
-                            </script></td>
-                </tr>
-                idRow++;
+                            </script>
+                        </td>
+                    </tr>
+                        idRow++;
                 }
             }
         </table>
     </div>
+</div>

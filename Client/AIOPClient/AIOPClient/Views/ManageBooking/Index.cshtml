@@ -3,11 +3,12 @@
 }
 
 <div class="panel panel-default">
-        <!-- Default panel contents -->
-        <div class="panel-heading"><center>Administration</center></div>
+    <!-- Default panel contents -->
+    <div class="panel-heading"><center>Administration</center></div>
 
-        <!-- Table -->
-        <table id="myTable" class="table">
+    <!-- Table -->
+    <div class="table-responsive">
+        <table id="myTable" class="table table-striped">
             <tr>
                 <th>Teacher</th>
                 <th>Teaching</th>
@@ -20,69 +21,82 @@
                 <th>Room</th>
                 <th>Action</th>
             </tr>
+
             @{
-                int idRow=1;
+                int idRow = 1;
                 foreach (dynamic waiting in ViewBag.waitingsList)
                 {
-                <tr>
-                    <td>@waiting.Teaching.Teacher.First_Name @waiting.Teaching.Teacher.Last_Name</td>
-                    <td>@waiting.Teaching.Course.Subject.Subject_Name</td>
-                    <td>@waiting.Teaching.Group.Group_Name</td>
-                    <td>@waiting.Start_Date</td>
-                    <td>@waiting.End_Date</td>
-                    @if (waiting.Room.Projector=="true"){
-                    <td>Yes</td>
-                    }
-                    else
-                    {
-                    <td>No</td>
-                    }
-                    @if (waiting.Room.Computer=="true"){
-                    <td>Yes</td>
-                    }
-                    else
-                    {
-                    <td>No</td>
-                    }
-                    <td>@waiting.Room.Building.Building_Name</td>
-                    <td>@waiting.Room.Room_Number</td>
-                    <td>
-                        <button type="button" id="btnAccept-@waiting.Id_Booking" class="btn btn-success btn-xs">Accept</button>
-                        <script>
-                            $(function () {
-                                $("#btnAccept-@waiting.Id_Booking").click(function (e) {
-                                    e.preventDefault();
-                                    var idBook = @waiting.Id_Booking
-                                    $.post("@Url.Action("acceptReservation","ManageBooking")",
-                                        { id: idBook }, function (data) {
-                                            //if the action was successfull
-                                            if (data == 0){
-                                                document.getElementById("myTable").deleteRow(@idRow);
-                                            }
-                                        });
+
+                    <tr>
+                        <td>@waiting.Teaching.Teacher.First_Name @waiting.Teaching.Teacher.Last_Name</td>
+                        <td>@waiting.Teaching.Course.Subject.Subject_Name</td>
+                        <td>@waiting.Teaching.Group.Group_Name</td>
+                        <td>@waiting.Start_Date</td>
+                        <td>@waiting.End_Date</td>
+
+                        @if (waiting.Room.Projector == "true")
+                        {
+                            <td>Yes</td>
+                        }
+                        else
+                        {
+                            <td>No</td>
+                        }
+                        @if (waiting.Room.Computer == "true")
+                        {
+                            <td>Yes</td>
+                        }
+                        else
+                        {
+                            <td>No</td>
+
+                        }
+                        <td>@waiting.Room.Building.Building_Name</td>
+                        <td>@waiting.Room.Room_Number</td>
+                        <td>
+                            <button type="button" id="btnAccept-@waiting.Id_Booking" class="btn btn-success btn-xs">Accept</button>
+                            <script>
+                                $(function () {
+                                    $("#btnAccept-@waiting.Id_Booking").click(function (e) {
+                                        e.preventDefault();
+                                        var idBook = @waiting.Id_Booking
+
+                                        $.post("@Url.Action("acceptReservation","ManageBooking")",
+                                            { id: idBook }, function (data) {
+                                                //if the action was successfull
+                                                if (data == 0) {
+                                                    document.getElementById("myTable").deleteRow(@idRow);
+                                                }
+
+                                            });
+                                    });
                                 });
-                            });
-                        </script>
-                        <button type="button" id="btnRefuse-@waiting.Id_Booking" class="btn btn-danger btn-xs">Refuse</button>
-                        <script>
-                            $(function () {
-                                $("#btnRefuse-@waiting.Id_Booking").click(function (e) {
-                                    e.preventDefault();
-                                    var idBook = @waiting.Id_Booking
-                                    $.post("@Url.Action("refuseReservation","ManageBooking")",
-                                        { id: idBook }, function (data) {
-                                            //if the action was successfull
-                                            if (data == 0) {
-                                                document.getElementById("myTable").deleteRow(@idRow);
-                                            }
-                                        });
+                            </script>
+                            <button type="button" id="btnRefuse-@waiting.Id_Booking" class="btn btn-danger btn-xs">Refuse</button>
+                            <script>
+                                $(function () {
+                                    $("#btnRefuse-@waiting.Id_Booking").click(function (e) {
+                                        e.preventDefault();
+                                        var idBook = @waiting.Id_Booking
+                                        $.post("@Url.Action("refuseReservation","ManageBooking")",
+                                            { id: idBook }, function (data) {
+
+                                                //if the action was successfull
+                                                if (data == 0) {
+                                                    document.getElementById("myTable").deleteRow(@idRow);
+                                                }
+
+                                            });
+                                    });
                                 });
-                            });
-                        </script>
-                    </td>
-                </tr>
-                idRow++;
+                            </script>
+                        </td>
+                    </tr>
+
+                        idRow++;
                 }
+
             }
         </table>
     </div>
+</div>
