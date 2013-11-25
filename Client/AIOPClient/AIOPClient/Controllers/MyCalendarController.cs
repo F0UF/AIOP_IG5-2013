@@ -53,8 +53,9 @@ namespace AIOPClient.Controllers
                     String teacher = reservation.Teaching.Teacher.First_Name + " " + reservation.Teaching.Teacher.Last_Name;
                     String salle = reservation.Room.Room_Number;
                     String group = reservation.Teaching.Group.Group_Name;
+                    String time_slot = dateStart.ToString("HH:mm") + " - " + dateEnd.ToString("HH:mm");
 
-                    eventList.Add(new { title = title, start = startString, end = endString, allday = false, teacher = teacher, salle = salle, group = group });
+                    eventList.Add(new { title = title, start = startString, end = endString, allday = false, teacher = teacher, salle = salle, group = group, time_slot = time_slot });
                 }
 
                 

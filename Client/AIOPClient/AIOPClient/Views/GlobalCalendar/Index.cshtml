@@ -11,6 +11,14 @@
     Si renseigné, afficher calendrier en fonction du formulaire.
     Sinon, afficher que le formulaire
 -->
+ <div id="cal_event"></div>
+<script>
+    if (isMobile.any()) {
+        document.writeln(' <div id="calendar" style="font-size: 8px" ></div>');
+    }
+    else
+        document.writeln(' <div id="calendar" style="font-size: 12px" ></div>');
+</script>
 
 <div class="btn-group">
 
@@ -106,6 +114,26 @@
 
 
 <script>
+    isMobile = {
+        Android: function () {
+            return navigator.userAgent.match(/Android/i);
+        },
+        BlackBerry: function () {
+            return navigator.userAgent.match(/BlackBerry/i);
+        },
+        iOS: function () {
+            return navigator.userAgent.match(/iPhone|iPad|iPod/i);
+        },
+        Opera: function () {
+            return navigator.userAgent.match(/Opera Mini/i);
+        },
+        Windows: function () {
+            return navigator.userAgent.match(/IEMobile/i);
+        },
+        any: function () {
+            return (isMobile.Android() || isMobile.BlackBerry() || isMobile.iOS() || isMobile.Opera() || isMobile.Windows());
+        }
+    };
 
     $(function () {
 
@@ -213,7 +241,8 @@
                             title: this.title,
                             start: this.start,
                             end: this.end,
-                            allDay: this.editable
+                            allDay: this.allday,
+                            description: '<p>Time Slot : ' + this.time_slot + '</p>' + '<p>Room : ' + this.salle + '</p>' + '<p>Teacher : ' + this.teacher + '</p>' + '<p>Group : ' + this.group + '</p>'
                         };
                     }).toArray();
                     callback(result);
@@ -250,7 +279,15 @@
             },
             defaultView: 'agendaWeek',
             editable: false,
-            events: source
+            events: source,
+            eventClick: function (calEvent, jsEvent, view) {
+                $("#cal_event").html(calEvent.description);
+                $("#cal_event").dialog({
+                    title: calEvent.title,
+                    content: calEvent.description
+                }); $("#cal_event").HTML(calEvent.description);
+
+            }
         });
     });
 </script>
