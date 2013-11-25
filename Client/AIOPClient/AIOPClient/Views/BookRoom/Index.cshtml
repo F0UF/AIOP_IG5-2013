@@ -2,128 +2,129 @@
     ViewBag.Title = "Book Room";
 }
 
-<form role="form" method="post" class="form-horizontal">
-    <div class="row">
-        @* We'll have to do a concatenation of Promo/Year/Groupe if needed*@
-        <div class="col-md-2">
-            <label for="promotion">Promotion</label>
-        </div>
-        <div class="col-md-2">
-            <select class="form-control" name="promo" title="">
-                <option>ERII</option>
-                <option>IG</option>
-                <option>MAT</option>
-                <option>MI</option>
-                <option>STE</option>
-                <option>STIA</option>
-            </select>
+    <form role="form" method="post" class="form-inline">
+        <div class="row">
+            @* We'll have to do a concatenation of Promo/Year/Groupe if needed*@
+            <div class="col-md-2">
+                <label for="promotion">Promotion</label>
+            </div>
+            <div class="col-md-2">
+                <select class="form-control" name="promo" title="">
+                    <option>ERII</option>
+                    <option>IG</option>
+                    <option>MAT</option>
+                    <option>MI</option>
+                    <option>STE</option>
+                    <option>STIA</option>
+                </select>
+            </div>
+
+            <div class="col-md-2">
+                <label for="year">Year</label>
+            </div>
+            <div class="col-md-2">
+                <select class="form-control" name="year">
+                    <option>3</option>
+                    <option>4</option>
+                    <option>5</option>
+                </select>
+            </div>
+
+            <div class="col-md-2">
+                <label for="group">Group</label>
+            </div>
+            <div class="col-md-2">
+                <select class="form-control" name="group">
+                    <option></option>
+                    <option>anglais G1</option>
+                    <option>anglais G2</option>
+                    <option>anglais G3</option>
+                    <option>G1</option>
+                    <option>G2</option>
+                </select>
+            </div>
         </div>
 
-        <div class="col-md-2">
-            <label for="year">Year</label>
-        </div>
-        <div class="col-md-2">
-            <select class="form-control" name="year">
-                <option>3</option>
-                <option>4</option>
-                <option>5</option>
-            </select>
-        </div>
+        <div class="row">
+            <div class="col-md-2">
+                <label for="teaching">Teaching</label>
+            </div>
+            <div class="col-md-2">
+                <select class="form-control" name="subject">
+                    @foreach (dynamic subject in ViewBag.SubjectList)
+                    {
+                        <option>@subject.Subject_Name</option>
+                    }
+                </select>
+            </div>
+            <div class="col-md-2">
+                <label for="type">Type</label>
+            </div>
+            <div class="col-md-2">
+                <select class="form-control" name="type">
+                    <option>Cours</option>
+                    <option>TD</option>
+                    <option>TP</option>
+                </select>
+            </div>
 
-        <div class="col-md-2">
-            <label for="group">Group</label>
+            <div class="col-md-2">
+                <label for="type">Capacity</label>
+            </div>
+            <div class="col-md-2">
+                <select class="form-control" name="capacity">
+                    <option>Small (-30)</option>
+                    <option>Medium (between 30 and 50)</option>
+                    <option>Large (between 50 and 70)</option>
+                    <option>Amphi (70+)</option>
+                </select>
+            </div>
         </div>
-        <div class="col-md-2">
-            <select class="form-control" name="group">
-                <option></option>
-                <option>anglais G1</option>
-                <option>anglais G2</option>
-                <option>anglais G3</option>
-                <option>G1</option>
-                <option>G2</option>
-            </select>
+        <br />
+        <label for="projector" class="inline checkbox">
+            <input id="projector" name="projector" type="checkbox">
+            Projector  &nbsp&nbsp&nbsp
+        </label>
+        <label for="computers" class="inline checkbox">
+            <input id="computers" name="computers" type="checkbox">
+            Computers
+        </label>
+
+        <!-- DATE PICKER -->
+        <br />
+        <br />
+        <div class="row">
+            <div class="col-xs-3">
+                <label for="datepicker">
+                    Date
+                    <input type="text" id="datepicker" class="form-control" name="date" required="" placeholder="Select Date" readonly="" />
+                    @* <span class="input-group-addon" id="btn" style="cursor: pointer;">
+                            <span class="glyphicon glyphicon-calendar"></span>
+                        </span>*@
+                </label>
+            </div>
+
+            <div class="col-xs-3">
+                <label for="timepickerStart">
+                    Starts At
+                    <input type="text" id="timepickerStart" class="form-control" name="start" required="" placeholder="Select Time" readonly="" />
+
+                </label>
+            </div>
+
+            <div class="col-xs-3">
+                <label for="timepickerEnd">
+                    Ends At
+                    <input type="text" id="timepickerEnd" class="form-control" name="end" required="" placeholder="Select Time" readonly="" />
+
+                </label>
+            </div>
         </div>
-    </div>
-
-    <div class="row">
-        <div class="col-md-2">
-            <label for="teaching">Teaching</label>
-        </div>
-        <div class="col-md-2">
-            <select class="form-control" name="subject">
-                @foreach (dynamic subject in ViewBag.SubjectList)
-                {
-                    <option>@subject.Subject_Name</option>
-                }
-            </select>
-        </div>
-        <div class="col-md-2">
-            <label for="type">Type</label>
-        </div>
-        <div class="col-md-2">
-            <select class="form-control" name="type">
-                <option>Cours</option>
-                <option>TD</option>
-                <option>TP</option>
-            </select>
-        </div>
-
-        <div class="col-md-2">
-            <label for="type">Capacity</label>
-        </div>
-        <div class="col-md-2">
-            <select class="form-control" name="capacity">
-                <option>Small (-30)</option>
-                <option>Medium (between 30 and 50)</option>
-                <option>Large (between 50 and 70)</option>
-                <option>Amphi (70+)</option>
-            </select>
-        </div>
-    </div>
-    <label for="projector" class="inline checkbox">
-        <input id="projector" name="projector" type="checkbox">
-        Projector
-    </label>
-    <label for="computers" class="inline checkbox">
-        <input id="computers" name="computers" type="checkbox">
-        Computers
-    </label>
-
-    <!-- DATE PICKER -->
+        <br />
+        <button name="submit" value="submit" type="submit" id="submit" class="btn btn-default">Submit</button>
 
 
-    <div class="row">
-        <div class="col-xs-3">
-            <label for="datepicker">
-                Date
-        <input type="text" id="datepicker" class="form-control" name="date" required="" placeholder="Select Date" readonly="" />
-                @* <span class="input-group-addon" id="btn" style="cursor: pointer;">
-                    <span class="glyphicon glyphicon-calendar"></span>
-                </span>*@
-            </label>
-        </div>
-
-        <div class="col-xs-3">
-            <label for="timepickerStart">
-                Starts At
-        <input type="text" id="timepickerStart" class="form-control" name="start" required="" placeholder="Select Time" readonly="" />
-
-            </label>
-        </div>
-
-        <div class="col-xs-3">
-            <label for="timepickerEnd">
-                Ends At
-        <input type="text" id="timepickerEnd" class="form-control" name="end" required="" placeholder="Select Time" readonly="" />
-
-            </label>
-        </div>
-
-    </div>
-
-    <button name="submit" value="submit" type="submit" id="submit" class="btn btn-default">Submit</button>
-
-</form>
+    </form>
 
 <script>
 
