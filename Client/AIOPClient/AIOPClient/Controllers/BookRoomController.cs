@@ -98,7 +98,7 @@ namespace AIOPClient.Controllers
 
                 if (response.Equals("null"))
                 {
-                    return Content("<script> alert(\'No room available\');location.href='./';</script>");
+                    return Content("<script> alert(\'ERROR : No room available or you are not allowed to teach this subject\');location.href='./';</script>");
                 }
                 else
                 {

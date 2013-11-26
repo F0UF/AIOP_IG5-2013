@@ -69,7 +69,7 @@ namespace AIOPClient.Controllers
                     {
                         color = "#A00000";
                     }
-                    eventList.Add(new { title = title, start = startString, end = endString, allday = false, teacher = teacher, salle = salle, group = group, time_slot = time_slot, color = color });
+                    eventList.Add(new { title = title, start = startString, end = endString, allday = false, teacher = teacher, salle = salle, group = group, time_slot = time_slot, color = color, state = state });
                 }
 
 
