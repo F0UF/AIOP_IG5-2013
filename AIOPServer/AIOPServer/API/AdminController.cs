@@ -19,7 +19,7 @@ namespace AIOPServer.API
     public class AdminController : ApiController
     {
         AIOPContext db = new AIOPContext();
-        
+
         //Get
         [HttpGet]
         [ActionName("Waiting")]
@@ -29,10 +29,34 @@ namespace AIOPServer.API
         }
 
         [HttpGet]
-        [ActionName("Create")]
-        public Teaching CreateTeaching(int id_Teacher, int id_Group, int hour_Number, int id_Course)
+        [ActionName("CreateTeaching")]
+        public Teaching CreateTeaching(String Subject_Name, String Teacher_Name, String Group_Name, String Type, String Course_Name, int Hours)
         {
-            return Teaching.createTeaching(db,id_Teacher, id_Group, hour_Number, id_Course);
+            int id_Teacher;
+            int id_Group;
+
+            String[] names = Teacher_Name.Split(' ');
+            String first_name = names[0];
+            String last_name = names[1];
+            if (names.Length > 2)
+            {
+                last_name = last_name + " " + names[2];
+            }
+
+            id_Teacher = db.Teachers.SingleOrDefault(teacher => teacher.First_Name == first_name && teacher.Last_Name == last_name).Id_Teacher;
+            id_Group = db.Groups.SingleOrDefault(group => group.Group_Name == Group_Name).Id_Group;
+
+            Subject subject = db.Subjects.SingleOrDefault(this_subject => this_subject.Subject_Name == Subject_Name);
+            CourseType courseType = db.CourseTypes.SingleOrDefault(this_type => this_type.Course_Type_Name == Type);
+            Course course = db.Courses.SingleOrDefault(this_course => this_course.Subject.Subject_Name == Subject_Name && this_course.Course_Type.Course_Type_Name == Type);
+
+            if (course == null)
+            {
+                Course.createCourse(db, subject.Id_Subject, courseType.Id_Course_Type, Course_Name);
+                course = db.Courses.SingleOrDefault(this_course => this_course.Subject.Subject_Name == Subject_Name && this_course.Course_Type.Course_Type_Name == Type);
+            }
+
+            return Teaching.createTeaching(db, id_Teacher, id_Group, Hours, course.Id_Course);
         }
 
         [HttpGet]
@@ -51,12 +75,44 @@ namespace AIOPServer.API
 
         //Post
         [HttpPost]
-        [ActionName("Create")]
-        public JObject PostCreateTeaching(int id_Teacher, int id_Group, int hour_Number, int id_Course)
+        [ActionName("CreateTeaching")]
+        public Teaching PostCreateTeaching(JObject json)
         {
-            JObject jo = new JObject();
-            jo.Add(JsonConvert.SerializeObject(Teaching.createTeaching(db, id_Teacher, id_Group, hour_Number, id_Course)));
-            return jo;
+            //String Subject_Name, String Teacher_Name, String Group_Name, String Type, String Course_Name, int Hours
+            dynamic jo = json;
+            String Subject_Name = jo.Subject_Name;
+            String Teacher_Name = jo.Teacher_Name;
+            String Group_Name = jo.Group_Name;
+            String Type = jo.Type;
+            String Course_Name = jo.Course_Name;
+            int Hours = jo.Hours;
+
+
+            int id_Teacher;
+            int id_Group;
+
+            String[] names = Teacher_Name.Split(' ');
+            String first_name = names[0];
+            String last_name = names[1];
+            if (names.Length > 2)
+            {
+                last_name = last_name + " " + names[2];
+            }
+
+            id_Teacher = db.Teachers.SingleOrDefault(teacher => teacher.First_Name == first_name && teacher.Last_Name == last_name).Id_Teacher;
+            id_Group = db.Groups.SingleOrDefault(group => group.Group_Name == Group_Name).Id_Group;
+
+            Subject subject = db.Subjects.SingleOrDefault(this_subject => this_subject.Subject_Name == Subject_Name);
+            CourseType courseType = db.CourseTypes.SingleOrDefault(this_type => this_type.Course_Type_Name == Type);
+            Course course = db.Courses.SingleOrDefault(this_course => this_course.Subject.Subject_Name == Subject_Name && this_course.Course_Type.Course_Type_Name == Type);
+
+            if (course == null)
+            {
+                Course.createCourse(db, subject.Id_Subject, courseType.Id_Course_Type, Course_Name);
+                course = db.Courses.SingleOrDefault(this_course => this_course.Subject.Subject_Name == Subject_Name && this_course.Course_Type.Course_Type_Name == Type);
+            }
+
+            return Teaching.createTeaching(db, id_Teacher, id_Group, Hours, course.Id_Course);
         }
 
         [HttpPost]

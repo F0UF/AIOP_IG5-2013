@@ -1,26 +1,43 @@
 ﻿@{
     ViewBag.Title = "Index";
 }
-<form role="form" class="form-horizontal">
+<form role="form" method="post" class="form-horizontal">
 
-    <div class="panel-heading text-center">Administration</div>
-
-    <div class="row">
-        @* We'll have to do a concatenation of Promo/Year/Groupe if needed*@
-        <div class="col-md-2">
-            <label for="promotion">Teaching Name</label>
-        </div>
-        <div class="col-md-2">
-            <input class="input-xxlarge" type="text" id="inputTeachingName" placeholder="Type here…">
-        </div>
-    </div>
+    <div class="panel-heading text-center">Create Teaching</div>
 
     <div class="row">
         <div class="col-md-2">
-            <label for="teaching">Total expected hours :</label>
+            <label for="teaching">Subject :</label>
         </div>
         <div class="col-md-2">
-            <input class="input-xxlarge" type="text" id="inputTotalHours" placeholder="Type here…">
+            <select class="input-xxlarge form-control" title="" name="subject">
+                @foreach (dynamic subject in ViewBag.SubjectList)
+                {
+                    <option>
+                        @subject.Subject_Name
+                    </option>
+                }
+            </select>
+        </div>
+
+        <div class="col-md-2">
+            <label for="teaching">Type :</label>
+        </div>
+        <div class="col-md-2">
+            <select class="input-xxlarge form-control" title="" name="type">
+                <option>Cours</option>
+                <option>TD</option>
+                <option>TP</option>
+
+            </select>
+        </div>
+
+        
+        <div class="col-md-2">
+            <label for="teaching">Course Name :</label>
+        </div>
+        <div class="col-md-2">
+            <input class="input-xxlarge" type="text" placeholder="Type here…" name="course_name">
         </div>
     </div>
 
@@ -29,41 +46,44 @@
             <label for="teaching">Teacher :</label>
         </div>
         <div class="col-md-2">
-            <select class="input-xxlarge form-control" title="">
-                <option>BOURDON Isabelle</option>
-                <option>BUISSON Lysiane</option>
-                <option>CART Michelle</option>
-                <option>DE LAUZUN Anne Laure</option>
-                <option>FALLERY Bernard</option>
-                <option>JONQUET Clément</option>
-                <option>LAURENT Anne</option>
-                <option>RUIZ Jacques</option>
-                <option>STRATULAT Tiberiu</option>
-                <option>SALA Michel</option>
+            <select class="input-xxlarge form-control" title="" name="teacher">
+                @foreach (dynamic teacher in ViewBag.TeacherList)
+                {
+                    String teacher_name = teacher.First_Name + " " + teacher.Last_Name;
+                    <option>
+                        @teacher_name
+                    </option>
+                }
             </select>
         </div>
     </div>
 
-    <div class="row">
-        <div class="col-md-2">
-            <label for="teaching">Course :</label>
-        </div>
-        <div class="col-md-2">
-            <input class="input-xxlarge" type="text" id="inputCourse" placeholder="Type here…">
-        </div>
-    </div>
 
     <div class="row">
         <div class="col-md-2">
             <label for="teaching">Group :</label>
         </div>
         <div class="col-md-2">
-            <select class="input-xxlarge form-control" title="">
-                <option>IG3</option>
+            <select class="input-xxlarge form-control" title="" name="group">
                 <option>IG4</option>
-                <option>IG5</option>
+                <option>IG4 G1</option>
+                <option>IG4 G2</option>
+                <option>IG4 anglais G1</option>
+                <option>IG4 anglais G2</option>
+                <option>IG4 anglais G3</option>
             </select>
-</div>
+        </div>
+    </div>
+
+
+
+    <div class="row">
+        <div class="col-md-2">
+            <label for="teaching">Total expected hours :</label>
+        </div>
+        <div class="col-md-2">
+            <input class="input-xxlarge" type="text" id="inputTotalHours" placeholder="Type here…" name="hours">
+        </div>
     </div>
 
     <button class="input-xlarge btn btn-default" type="submit">Submit</button>

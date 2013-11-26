@@ -29,12 +29,12 @@ namespace AIOPClient.Controllers
 
         [ActionName("GetEvents")]
         public ActionResult GetEvents(int id_teacher)
-        {           
+        {
 
             using (var client = new WebClient())
             {
                 client.Encoding = Encoding.UTF8;
-                var result = client.DownloadString("http://162.38.113.204/api/planning/display?id_teacher="+id_teacher);
+                var result = client.DownloadString("http://162.38.113.204/api/planning/display?id_teacher=" + id_teacher);
                 JArray jsonArray = JArray.Parse(result) as JArray;
 
                 var eventList = new List<object>();
@@ -43,7 +43,7 @@ namespace AIOPClient.Controllers
                 {
                     String title = reservation.Teaching.Course.Subject.Subject_Name;
                     String start = reservation.Start_Date;
-                    DateTime dateStart = DateTime.ParseExact(start, "MM/dd/yyyy HH:mm:ss",null);
+                    DateTime dateStart = DateTime.ParseExact(start, "MM/dd/yyyy HH:mm:ss", null);
                     String startString = dateStart.ToString("yyyy-MM-dd HH:mm:ss");
 
                     String end = reservation.End_Date;
@@ -55,10 +55,24 @@ namespace AIOPClient.Controllers
                     String group = reservation.Teaching.Group.Group_Name;
                     String time_slot = dateStart.ToString("HH:mm") + " - " + dateEnd.ToString("HH:mm");
 
-                    eventList.Add(new { title = title, start = startString, end = endString, allday = false, teacher = teacher, salle = salle, group = group, time_slot = time_slot });
+                    String state = reservation.State;
+                    String color = "";
+                    if (state.Equals("Validé"))
+                    {
+                        color = "#487CB0";
+                    }
+                    if (state.Equals("En attente"))
+                    {
+                        color = "#FFAE00";
+                    }
+                    if (state.Equals("Refusé"))
+                    {
+                        color = "#A00000";
+                    }
+                    eventList.Add(new { title = title, start = startString, end = endString, allday = false, teacher = teacher, salle = salle, group = group, time_slot = time_slot, color = color });
                 }
 
-                
+
                 return Json(eventList.ToArray(), JsonRequestBehavior.AllowGet);
             }
         }

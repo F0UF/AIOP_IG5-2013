@@ -91,7 +91,7 @@ namespace AIOPClient.Controllers
                 json.Add("Start_At", start_time);
                 json.Add("End_At", end_time);
 
-                String urlApi = "http://localhost:55080/api/planning/CreateBooking";
+                String urlApi = "http://aiopninjaserver.no-ip.biz/api/planning/CreateBooking";
                 Debug.Write(json.ToString());
                 string jsonString = json.ToString();
                 var response = client.UploadString(urlApi, "POST", json.ToString());

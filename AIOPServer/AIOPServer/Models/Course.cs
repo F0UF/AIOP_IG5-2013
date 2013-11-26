@@ -35,6 +35,24 @@ namespace AIOPServer.Models
         [Column("LIBELLE_COURS")]
         public string Course_Name { get; set; }
 
-
+        public static Course createCourse(AIOPContext db, int id_Subject, int id_Course_Type, String Course_Name)
+        {
+            Course course = new Course
+            {
+                Id_Subject = id_Subject,
+                Id_Course_Type = id_Course_Type,
+                Course_Name = Course_Name
+            };
+            try
+            {
+                db.Courses.Add(course);
+                db.SaveChanges();
+                return course;
+            }
+            catch (Exception e)
+            {
+                return null;
+            }
+        }
     }
 }
