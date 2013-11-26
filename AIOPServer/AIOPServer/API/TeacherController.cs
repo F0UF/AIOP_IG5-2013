@@ -47,7 +47,7 @@ namespace AIOPServer.API
         [ActionName("summaryHours")]
         public JObject GetsummaryHours(int id_teacher)
         {
-            DateTime currentDate = new DateTime(2012, 3, 12);
+            DateTime currentDate = DateTime.Now;
             int totalHoursToDo;
             float hoursDone;
             float hoursPlan;
