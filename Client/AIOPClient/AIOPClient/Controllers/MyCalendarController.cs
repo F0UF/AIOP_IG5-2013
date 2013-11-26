@@ -63,7 +63,7 @@ namespace AIOPClient.Controllers
                     }
                     if (state.Equals("En attente"))
                     {
-                        color = "#FFAE00";
+                        color = "#E8B320";
                     }
                     if (state.Equals("Refusé"))
                     {
